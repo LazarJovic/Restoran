@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="img"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="E:/Fakultet_asistiranje/OISISI/Materijali/oisisi-2020-2021-master/04-Layout manageri/Dodatni materijali/MigLayoutExample/lib/miglayout-4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>

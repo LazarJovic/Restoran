@@ -1,6 +1,6 @@
 package main;
 
-import pogled.LoginWindow;
+import view.LoginWindow;
 
 public class Main {
 
