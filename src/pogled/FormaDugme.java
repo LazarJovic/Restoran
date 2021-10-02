@@ -1,4 +1,4 @@
-package view;
+package pogled;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-public class FormButton extends JButton {
+public class FormaDugme extends JButton {
 	
 	private String text;
 	private Color backColor;
@@ -17,7 +17,7 @@ public class FormButton extends JButton {
 	private int width;
 	private int height;
 	
-	public FormButton(String text, Color backColor, Color foreColor, int width, int height) {
+	public FormaDugme(String text, Color backColor, Color foreColor, int width, int height) {
 		this.backColor = backColor;
 		this.foreColor = foreColor;
 		this.setText(text);

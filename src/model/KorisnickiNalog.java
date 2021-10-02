@@ -4,25 +4,26 @@ import enums.Uloga;
 
 public class KorisnickiNalog {
 	
+	private int id;
 	private String lozinka;
 	private String korisnickoIme;
 	private Uloga uloga;
 	
 	public KorisnickiNalog() {}
 
-	public KorisnickiNalog(String lozinka, String korisnickoIme, Uloga uloga) {
+	public KorisnickiNalog(String korisnickoIme, String lozinka, Uloga uloga) {
 		super();
-		this.lozinka = lozinka;
 		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
 		this.uloga = uloga;
 	}
-
-	public String getLozinka() {
-		return lozinka;
+	
+	public int getId() {
+		return this.id;
 	}
-
-	public void setLozinka(String lozinka) {
-		this.lozinka = lozinka;
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getKorisnickoIme() {
@@ -33,6 +34,14 @@ public class KorisnickiNalog {
 		this.korisnickoIme = korisnickoIme;
 	}
 
+	public String getLozinka() {
+		return lozinka;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+	
 	public Uloga getUloga() {
 		return uloga;
 	}
@@ -42,6 +51,6 @@ public class KorisnickiNalog {
 	}
 	
 	public boolean promenaLozinke(String novaLozinka) {
-		return true; //TODO: Implementiraj metodu
+		return true; //TODO: Implementiraj metodu za promenu lozinke
 	}
 }

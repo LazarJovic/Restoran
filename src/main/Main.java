@@ -1,13 +1,16 @@
 package main;
 
-import view.LoginWindow;
+import baza.BazaPodatakaKonekcija;
+import kontroler.AuthKontroler;
+import pogled.PrijavaProzor;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		LoginWindow lw = new LoginWindow();
+		
+		BazaPodatakaKonekcija konekcija = BazaPodatakaKonekcija.getInstance();
+		AuthKontroler authController = new AuthKontroler();
+		PrijavaProzor lw = new PrijavaProzor(authController);
 		lw.setVisible(true);
 	}
-
 }

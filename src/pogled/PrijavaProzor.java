@@ -1,32 +1,37 @@
-package view;
+package pogled;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
+import izuzeci.BadCredentialsException;
+import izuzeci.MissingValueException;
+import izuzeci.NotFoundException;
+import kontroler.AuthKontroler;
 import net.miginfocom.swing.MigLayout;
-import sun.text.resources.cldr.mr.FormatData_mr;
 
-public class LoginWindow extends JFrame {
+public class PrijavaProzor extends JFrame {
 	
 	private JLabel lblUsername;
 	private JTextField tfUsername;
 	private JLabel lblPassword;
 	private JTextField tfPassword;
 	
-	public LoginWindow() {
+	private AuthKontroler authController;
+	
+	public PrijavaProzor() {};
+	
+	public PrijavaProzor(AuthKontroler authController) {
 		
 		setSize(new Dimension(500, 400));
 		setTitle("Prijava");
@@ -48,8 +53,24 @@ public class LoginWindow extends JFrame {
 		lblPassword = new JLabel("Lozinka: ");
 		lblPassword.setForeground(Color.WHITE);
 		tfPassword = new JTextField(50);
-		FormButton btnLogin = new FormButton("Prijava",new Color(16, 97, 4), Color.WHITE, 70, 20);
-		FormButton btnExit = new FormButton("Izlaz",new Color(16, 97, 4), Color.WHITE, 70, 20);
+		FormaDugme btnLogin = new FormaDugme("Prijava",new Color(16, 97, 4), Color.WHITE, 70, 20);
+		btnLogin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					boolean isOk = authController.login(tfUsername.getText(), tfPassword.getText());
+					close();
+					PocetniProzor procetniProzor = new PocetniProzor();
+				} catch (MissingValueException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.ERROR_MESSAGE);
+				} catch (BadCredentialsException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.ERROR_MESSAGE);	
+				}
+			}
+		});
+		FormaDugme btnExit = new FormaDugme("Izlaz",new Color(16, 97, 4), Color.WHITE, 70, 20);
 		
 		loginFormPanel.setBackground(new Color(16, 97, 4));
 		loginFormPanel.setLayout(new MigLayout("", "[][]", "30[]20[]20[]10[]10[]"));
@@ -63,5 +84,9 @@ public class LoginWindow extends JFrame {
 		loginFormPanel.add(btnLogin, "span2, split2, align right");
 		loginFormPanel.add(btnExit, "gapright 30");
 		add(loginFormPanel);
+	}
+	
+	private void close() {
+		this.dispose();
 	}
 }
