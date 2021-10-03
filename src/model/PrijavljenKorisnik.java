@@ -13,11 +13,11 @@ public class PrijavljenKorisnik {
 	private PrijavljenKorisnik() {}
 	
 	public static PrijavljenKorisnik getInstance() {
-		if (instance != null) {
-			return instance;
+		if (instance == null) {
+			instance = new PrijavljenKorisnik();
 		}
 		
-		return new PrijavljenKorisnik();
+		return instance;
 	}
 	
 	public void setKorisnickoIme(String korisnickoIme) {

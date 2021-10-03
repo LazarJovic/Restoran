@@ -18,7 +18,10 @@ import izuzeci.BadCredentialsException;
 import izuzeci.MissingValueException;
 import izuzeci.NotFoundException;
 import kontroler.AuthKontroler;
+import model.PrijavljenKorisnik;
 import net.miginfocom.swing.MigLayout;
+import pogled.pocetni_prozor.PocetniProzor;
+import pogled.pocetni_prozor.PocetniProzorFabrika;
 
 public class PrijavaProzor extends JFrame {
 	
@@ -58,11 +61,11 @@ public class PrijavaProzor extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
-					boolean isOk = authController.login(tfUsername.getText(), tfPassword.getText());
+					String uloga = authController.login(tfUsername.getText(), tfPassword.getText());
 					close();
-					PocetniProzor procetniProzor = new PocetniProzor();
+					PocetniProzor procetniProzor = new PocetniProzorFabrika().napraviPocetniProzor(uloga);
+					procetniProzor.setVisible(true);
 				} catch (MissingValueException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				} catch (BadCredentialsException e) {

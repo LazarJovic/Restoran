@@ -15,7 +15,7 @@ public class AuthKontroler {
 		this.korisnickiNalogRepo = new KorisnickiNalogRepo();
 	}
 	
-	public boolean login(String korisnickoIme, String lozinka) throws MissingValueException, BadCredentialsException {
+	public String login(String korisnickoIme, String lozinka) throws MissingValueException, BadCredentialsException {
 		if (checkIfNullOrEmpty(korisnickoIme)) {
 			throw new MissingValueException("Nije validno uneto korisničko ime.");
 		} else if (checkIfNullOrEmpty(lozinka)) {
@@ -32,7 +32,7 @@ public class AuthKontroler {
 		prijavljenKorisnik.setKorisnickoIme(korisnickoIme);
 		prijavljenKorisnik.setUloga(korisnickiNalog.getUloga());
 		
-		return true;
+		return korisnickiNalog.getUloga().toString();
 	}
 	
 	private boolean checkIfNullOrEmpty(String input) {

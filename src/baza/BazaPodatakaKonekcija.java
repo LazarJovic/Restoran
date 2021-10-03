@@ -29,11 +29,11 @@ public class BazaPodatakaKonekcija {
 	}
 	
 	public static BazaPodatakaKonekcija getInstance() {
-		if (instance != null) {
-			return instance;
+		if (instance == null) {
+			instance = new BazaPodatakaKonekcija();
 		}
 		
-		return new BazaPodatakaKonekcija();
+		return instance;
 	}
 	
 	private void napraviKonekciju(String driver, String url, String username, String password) {
