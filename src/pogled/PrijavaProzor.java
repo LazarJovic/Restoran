@@ -25,10 +25,8 @@ import pogled.pocetni_prozor.PocetniProzorFabrika;
 
 public class PrijavaProzor extends JFrame {
 	
-	private JLabel lblUsername;
-	private JTextField tfUsername;
-	private JLabel lblPassword;
-	private JTextField tfPassword;
+	private JTextField tfKorIme;
+	private JTextField tfLozinka;
 	
 	private AuthKontroler authController;
 	
@@ -41,28 +39,25 @@ public class PrijavaProzor extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		Font fntTitle = new Font("roboto", Font.BOLD, 14);
-		
-		JPanel loginFormPanel = new JPanel();
-		JLabel lblTitle = new JLabel("Prijavite se na sistem restorana");
-		lblTitle.setForeground(Color.WHITE);
-		lblTitle.setFont(fntTitle);
+		Font fntNaslov = PogledUtil.getRobotoFont(16);
+		Font fntLabela = PogledUtil.getRobotoFont(13);
+		Color clrForeground = Color.WHITE;
+		JPanel pnlPrijava = new JPanel();
+		Labela lblNaslov = new Labela("Prijavite se na sistem restorana", fntNaslov, clrForeground);
 		JLabel lblImage = new JLabel("");
 		Image image = new ImageIcon(this.getClass().getResource("/restaurant1.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
-		lblUsername = new JLabel("Korisnicko ime: ");
-		lblUsername.setForeground(Color.WHITE);
-		tfUsername = new JTextField(50);
-		lblPassword = new JLabel("Lozinka: ");
-		lblPassword.setForeground(Color.WHITE);
-		tfPassword = new JTextField(50);
-		FormaDugme btnLogin = new FormaDugme("Prijava",new Color(16, 97, 4), Color.WHITE, 70, 20);
-		btnLogin.addActionListener(new ActionListener() {
+		Labela lblKorIme = new Labela("Korisnicko ime: ", fntLabela, clrForeground);
+		tfKorIme = new JTextField(50);
+		Labela lblLozinka = new Labela("Lozinka: ", fntLabela, clrForeground);
+		tfLozinka = new JTextField(50);
+		FormaDugme btnPrijava = new FormaDugme("Prijava", new Color(16, 97, 4), Color.WHITE, 70, 20);
+		btnPrijava.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				try {
-					String uloga = authController.login(tfUsername.getText(), tfPassword.getText());
+					String uloga = authController.login(tfKorIme.getText(), tfLozinka.getText());
 					close();
 					PocetniProzor procetniProzor = new PocetniProzorFabrika().napraviPocetniProzor(uloga);
 					procetniProzor.setVisible(true);
@@ -73,20 +68,21 @@ public class PrijavaProzor extends JFrame {
 				}
 			}
 		});
-		FormaDugme btnExit = new FormaDugme("Izlaz",new Color(16, 97, 4), Color.WHITE, 70, 20);
 		
-		loginFormPanel.setBackground(new Color(16, 97, 4));
-		loginFormPanel.setLayout(new MigLayout("", "[][]", "30[]20[]20[]10[]10[]"));
+		FormaDugme btnIzlaz = new FormaDugme("Izlaz",new Color(16, 97, 4), Color.WHITE, 70, 20);
 		
-		loginFormPanel.add(lblTitle, "wrap, span2, align center");
-		loginFormPanel.add(lblImage, "wrap, span2, align center");
-		loginFormPanel.add(lblUsername, "gapleft 30");
-		loginFormPanel.add(tfUsername, "wrap, pushx, growx, gapright 30");
-		loginFormPanel.add(lblPassword, "gapleft 30");
-		loginFormPanel.add(tfPassword, "wrap, pushx, growx, gapright 30");
-		loginFormPanel.add(btnLogin, "span2, split2, align right");
-		loginFormPanel.add(btnExit, "gapright 30");
-		add(loginFormPanel);
+		pnlPrijava.setBackground(new Color(16, 97, 4));
+		pnlPrijava.setLayout(new MigLayout("", "[][]", "30[]20[]20[]10[]10[]"));
+		
+		pnlPrijava.add(lblNaslov, "wrap, span2, align center");
+		pnlPrijava.add(lblImage, "wrap, span2, align center");
+		pnlPrijava.add(lblKorIme, "gapleft 30");
+		pnlPrijava.add(tfKorIme, "wrap, pushx, growx, gapright 30");
+		pnlPrijava.add(lblLozinka, "gapleft 30");
+		pnlPrijava.add(tfLozinka, "wrap, pushx, growx, gapright 30");
+		pnlPrijava.add(btnPrijava, "span2, split2, align right");
+		pnlPrijava.add(btnIzlaz, "gapright 30");
+		add(pnlPrijava);
 	}
 	
 	private void close() {
