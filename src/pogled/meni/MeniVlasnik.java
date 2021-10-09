@@ -35,7 +35,7 @@ public class MeniVlasnik extends Meni {
 		return this.stavkaRezervacije;
 	}
 	
-	public MeniStavka getStavkaInforRestorana() {
+	public MeniStavka getStavkaInfoRestorana() {
 		return this.stavkaInfoRestorana;
 	}
 	

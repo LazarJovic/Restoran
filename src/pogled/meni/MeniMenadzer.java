@@ -13,4 +13,7 @@ public class MeniMenadzer extends Meni {
 		add(stavkaRezervacije, "wrap, align center");
 	}
 	
+	public MeniStavka getStavkaRezervacije() {
+		return this.stavkaRezervacije;
+	}
 }

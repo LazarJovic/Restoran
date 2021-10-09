@@ -17,4 +17,12 @@ public class MeniSefKuhinje extends Meni {
 		add(stavkaZahteviZaJelo, "wrap, align center");
 	}
 	
+	public MeniStavka getStavkaTipoviJela() {
+		return this.stavkaTipoviJela;
+	}
+	
+	public MeniStavka getStavkaZahteviZaJelo() {
+		return this.stavkaZahteviZaJelo;
+	}
+	
 }

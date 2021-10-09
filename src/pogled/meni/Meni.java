@@ -13,7 +13,7 @@ import net.miginfocom.swing.MigLayout;
 public class Meni extends JPanel {
 
 	private MeniStavka stavkaProfil;
-	private MeniStavka stavkaMeni;
+	private MeniStavka stavkaJelovnik;
 	
 	public Meni() {
 		setPreferredSize(new Dimension(300, 100));
@@ -26,19 +26,19 @@ public class Meni extends JPanel {
 		lblImage.setIcon(new ImageIcon(image));
 		
 		stavkaProfil = new MeniStavka("/profile1.png", "Profil");
-		stavkaMeni = new MeniStavka("/menu1.png", "Meni restorana");
+		stavkaJelovnik = new MeniStavka("/menu1.png", "Jelovnik restorana");
 		
 		add(lblImage, "wrap, gaptop 25, gapbottom 40, align center");
 		add(stavkaProfil, "wrap, align center");
-		add(stavkaMeni, "wrap, align center");
+		add(stavkaJelovnik, "wrap, align center");
 	}
 	
 	public MeniStavka getStavkaProfil() {
 		return this.stavkaProfil;
 	}
 	
-	public MeniStavka getStavkaMeni() {
-		return this.stavkaMeni;
+	public MeniStavka getStavkaJelovnik() {
+		return this.stavkaJelovnik;
 	}
 	
 }

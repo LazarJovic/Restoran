@@ -27,7 +27,6 @@ public class MeniStavka extends JPanel {
 		Image image = new ImageIcon(this.getClass().getResource(ikonica)).getImage();
 		lblIkonica.setIcon(new ImageIcon(image));
 		btnStavka = new FormaDugme(naziv, new Color(16, 97, 4), Color.WHITE, 170, 30);
-		//btnStavka.setPreferredSize(new Dimension(170, 30));
 		
 		add(lblIkonica);
 		add(btnStavka);
