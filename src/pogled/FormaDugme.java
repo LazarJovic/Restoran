@@ -17,7 +17,7 @@ public class FormaDugme extends JButton {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setForeground(foreColor);
 		this.setBackground(backColor);
-		this.setFont(PogledUtil.getRobotoFont(13));
+		this.setFont(PogledUtil.getRobotoFont(13, true));
 		this.setBorder(BorderFactory.createCompoundBorder(
 		        BorderFactory.createLineBorder(foreColor, 2), 
 		        BorderFactory.createEmptyBorder(5, 5, 5, 5)));

@@ -7,11 +7,11 @@ public class PocetniProzorFabrika {
 	
 	public PocetniProzor napraviPocetniProzor(String uloga) {
 		switch (uloga) {
-		case "VLASNIK":
+		case "Vlasnik":
 			return new PocetniProzorVlasnik();
-		case "MENADZER":
+		case "Menadžer":
 			return new PocetniProzorMenadzer();
-		case "SEF_KUHINJE":
+		case "Šef kuhinje":
 			return new PocetniProzorSef();
 		default:
 			return new PocetniProzor();

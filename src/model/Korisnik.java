@@ -1,8 +1,14 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Korisnik {
+import observer.IzmenaKorisnikaEvent;
+import observer.Observer;
+import observer.Publisher;
+
+public class Korisnik implements Publisher {
 	
 	private String ime;
 	private String prezime;
@@ -11,6 +17,7 @@ public class Korisnik {
 	private LocalDate datumRodjenja;
 	private LocalDate datumZaposlenja;
 	private KorisnickiNalog korisnickiNalog;
+	private List<Observer> observers;
 	
 	public Korisnik() {}
 
@@ -80,5 +87,27 @@ public class Korisnik {
 
 	public void setKorisnickiNalog(KorisnickiNalog korisnickiNalog) {
 		this.korisnickiNalog = korisnickiNalog;
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		if (observers == null)
+			observers = new ArrayList<Observer>();
+		observers.add(observer);	
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		if (null == observers)
+			return;
+		observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		IzmenaKorisnikaEvent izmenaKorisnikaEvent = new IzmenaKorisnikaEvent(ime, prezime, telefon, email);
+		for (Observer observer : observers) {
+			observer.updatePerformed(izmenaKorisnikaEvent);
+		}	
 	}
 }

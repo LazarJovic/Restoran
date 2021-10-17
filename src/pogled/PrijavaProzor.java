@@ -28,20 +28,22 @@ public class PrijavaProzor extends JFrame {
 	private JTextField tfKorIme;
 	private JTextField tfLozinka;
 	
-	private AuthKontroler authController;
+	private AuthKontroler authKontroler;
 	
-	public PrijavaProzor() {};
-	
-	public PrijavaProzor(AuthKontroler authController) {
-		
+	public PrijavaProzor() {
 		setSize(new Dimension(500, 400));
 		setTitle("Prijava");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+	
+		this.authKontroler = new AuthKontroler();
 		
-		Font fntNaslov = PogledUtil.getRobotoFont(16);
-		Font fntLabela = PogledUtil.getRobotoFont(13);
+		Font fntNaslov = PogledUtil.getRobotoFont(16, true);
+		Font fntLabela = PogledUtil.getRobotoFont(13, true);
+		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
 		Color clrForeground = Color.WHITE;
+		
+		
 		JPanel pnlPrijava = new JPanel();
 		Labela lblNaslov = new Labela("Prijavite se na sistem restorana", fntNaslov, clrForeground);
 		JLabel lblImage = new JLabel("");
@@ -51,13 +53,13 @@ public class PrijavaProzor extends JFrame {
 		tfKorIme = new JTextField(50);
 		Labela lblLozinka = new Labela("Lozinka: ", fntLabela, clrForeground);
 		tfLozinka = new JTextField(50);
-		FormaDugme btnPrijava = new FormaDugme("Prijava", new Color(16, 97, 4), Color.WHITE, 70, 20);
+		FormaDugme btnPrijava = new FormaDugme("Prijava", clrPrimarna, clrForeground, 70, 30);
 		btnPrijava.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				try {
-					String uloga = authController.login(tfKorIme.getText(), tfLozinka.getText());
+					String uloga = authKontroler.login(tfKorIme.getText(), tfLozinka.getText());
 					close();
 					PocetniProzor procetniProzor = new PocetniProzorFabrika().napraviPocetniProzor(uloga);
 					procetniProzor.setVisible(true);
@@ -69,9 +71,9 @@ public class PrijavaProzor extends JFrame {
 			}
 		});
 		
-		FormaDugme btnIzlaz = new FormaDugme("Izlaz",new Color(16, 97, 4), Color.WHITE, 70, 20);
+		FormaDugme btnIzlaz = new FormaDugme("Izlaz", clrPrimarna, clrForeground, 70, 30);
 		
-		pnlPrijava.setBackground(new Color(16, 97, 4));
+		pnlPrijava.setBackground(clrPrimarna);
 		pnlPrijava.setLayout(new MigLayout("", "[][]", "30[]20[]20[]10[]10[]"));
 		
 		pnlPrijava.add(lblNaslov, "wrap, span2, align center");
