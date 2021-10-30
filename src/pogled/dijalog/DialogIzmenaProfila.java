@@ -70,8 +70,9 @@ public class DialogIzmenaProfila extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					korisnikKontroler.izmeniKorisnika(tfIme.getText(), tfPrezime.getText(), tfTelefon.getText(), tfEmail.getText(), korisnik.getEmail());
+					close();
 				} catch (MissingValueException e1) {
-					System.out.println("missing value");
+					System.out.println("missing value"); //TODO: Handle errors
 					e1.printStackTrace();
 				} catch (SQLException e1) {
 					System.out.println("sql exception");
@@ -91,5 +92,9 @@ public class DialogIzmenaProfila extends JDialog {
 		add(lblEmail);
 		add(tfEmail, "wrap");
 		add(btnIzmena, "wrap, span2, align center");
-	}	
+	}
+	
+	private void close() {
+		this.dispose();
+	}
 }

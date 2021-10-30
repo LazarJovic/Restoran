@@ -28,7 +28,7 @@ public class PogledUtil {
 		return new Color(190, 196, 188);
 	}
 	
-	public static DateTimeFormatter  getFormatDatuma() {
+	public static DateTimeFormatter getFormatDatuma() {
 		return DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 	}
 }

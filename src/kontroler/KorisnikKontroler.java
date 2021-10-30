@@ -1,8 +1,10 @@
 package kontroler;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import izuzeci.MissingValueException;
+import izuzeci.ResultEmptyException;
 import model.Korisnik;
 import repozitorijum.KorisnikRepo;
 
@@ -17,6 +19,15 @@ public class KorisnikKontroler {
 	
 	public Korisnik dobaviKorisnikaPoKorImenu(String korisnickoIme) {
 		return korisnikRepo.dobaviKorisnikaPoKorImenu(korisnickoIme);
+	}
+	
+	public List<Korisnik> dobaviKorisnike() throws ResultEmptyException {
+		List<Korisnik> korisnici = korisnikRepo.dobaviKorisnike();
+		if (korisnici.size() == 0) {
+			throw new ResultEmptyException("Nema registrovanih zaposlenih u restoranu.");
+		}
+		
+		return korisnici;
 	}
 	
 	public void izmeniKorisnika(String ime, String prezime, String telefon, String email, String stariEmail) throws MissingValueException, SQLException {

@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import baza.BazaPodatakaKonekcija;
 import enums.Uloga;
@@ -13,6 +15,26 @@ import model.Korisnik;
 public class KorisnikRepo {
 
 	public KorisnikRepo() {}
+	
+	public List<Korisnik> dobaviKorisnike() {
+		String dobaviKorisnike = 
+				"SELECT * FROM Korisnik korisnik JOIN Korisnicki_Nalog nalog ON korisnik.id = nalog.id";
+		PreparedStatement preparedStatement = null;
+		List<Korisnik> korisnici = new ArrayList<>();
+		try {
+			preparedStatement = BazaPodatakaKonekcija.getInstance().getKonekcija().prepareStatement(dobaviKorisnike);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				korisnici.add(new Korisnik(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),
+						LocalDate.parse(resultSet.getString(6)), LocalDate.parse(resultSet.getString(7)),
+						new KorisnickiNalog(resultSet.getString(10), resultSet.getString(11), getUloga(resultSet.getString(12)))));
+			}
+		} catch (SQLException e) {
+			return korisnici; // Lista ima 0 elemenata
+		}
+		
+		return korisnici;
+	}
 	
 	public Korisnik dobaviKorisnikaPoKorImenu(String korisnickoIme) {
 		String dobaviKorisnikaPoKorImenu =
