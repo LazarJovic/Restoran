@@ -1,16 +1,22 @@
 package pogled.panel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.plaf.ComboBoxUI;
+import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import izuzeci.ResultEmptyException;
 import kontroler.KorisnikKontroler;
@@ -18,8 +24,8 @@ import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
+import pogled.PadajucaLista;
 import pogled.PogledUtil;
-import pogled.TekstPolje;
 import pogled.tabela.TabelaModelZaposleni;
 import pogled.tabela.TabelaZaposleni;
 
@@ -55,7 +61,9 @@ public class PanelZaposleni extends JPanel {
 		Image image = new ImageIcon(this.getClass().getResource("/employees96.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
 		Labela lblTipZaposlenog = new Labela("Tip zaposlenog:", fntTekstPolje, clrForeground);
-		TekstPolje tfTipZaposlenog = new TekstPolje("", fntTekstPolje, 140, 30);
+		String[] tipoviZaposlenih = { "Vlasnik", "Menadžer", "Šef kuhinje", "Konobar"};
+		PadajucaLista plTipoviZaposlenih = new PadajucaLista(tipoviZaposlenih,
+				clrPrimarna, clrForeground, fntTekstPolje, 100, 30);
 		FormaDugme btnDodajZaposlenog = new FormaDugme("Registruj zaposlenog", clrPrimarna, clrForeground, 150, 20);
 		FormaDugme btnPretrazi = new FormaDugme("Pretraži", clrPrimarna, clrForeground, 75, 20);
 		
@@ -64,7 +72,7 @@ public class PanelZaposleni extends JPanel {
 		add(lblNaslov, "wrap, span2, align center");
 		add(lblImage, "wrap, span2, align center");
 		add(lblTipZaposlenog, "cell 0 2, align left");
-		add(tfTipZaposlenog, "cell 0 2, align left");
+		add(plTipoviZaposlenih, "cell 0 2, align left");
 		add(btnPretrazi, "cell 0 2, gapleft 10, align left");
 		add(btnDodajZaposlenog, "cell 1 2, wrap, align right");
 		

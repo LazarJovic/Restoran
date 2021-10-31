@@ -85,5 +85,10 @@ public class TabelaModelZaposleni extends AbstractTableModel {
 			return "";
 		}
 	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return columnIndex == 6;
+	}
 
 }

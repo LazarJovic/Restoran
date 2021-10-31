@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import pogled.PogledUtil;
+
 public class DugmeBrisanjeZaposlenog extends AbstractCellEditor
 	implements TableCellRenderer, TableCellEditor, MouseListener  {
 
@@ -36,7 +38,7 @@ public class DugmeBrisanjeZaposlenog extends AbstractCellEditor
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fireEditingStopped();
-				JOptionPane.showMessageDialog(tabela, "Funkcionalnost je u izradi" + tabela.getSelectedRow());
+				JOptionPane.showMessageDialog(tabela, "Funkcionalnost je u izradi", "Nedovršena funkcionalnost", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
