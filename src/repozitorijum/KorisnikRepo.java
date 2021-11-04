@@ -35,7 +35,7 @@ public class KorisnikRepo {
 						new KorisnickiNalog(resultSet.getString(10), resultSet.getString(11), getUloga(resultSet.getString(12)))));
 			}
 		} catch (SQLException e) {
-			return korisnici; // Lista ima 0 elemenata
+			return korisnici;
 		}
 		
 		return korisnici;

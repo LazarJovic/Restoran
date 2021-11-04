@@ -5,33 +5,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JPanel;
 
 import pogled.meni.MeniFabrika;
 import pogled.meni.MeniSefKuhinje;
-import pogled.panel.PanelInfoRestorana;
-import pogled.panel.PanelRezervacije;
+import pogled.panel.PanelJelovnik;
+import pogled.panel.PanelProfil;
 import pogled.panel.PanelTipoviJela;
 import pogled.panel.PanelZahteviZaJelo;
-import pogled.panel.PanelZaposleni;
 
 public class PocetniProzorSef extends PocetniProzor {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5303103792307993741L;
 	private MeniSefKuhinje meni;
-	private List<JPanel> paneli;
 	
 	public PocetniProzorSef() {
 		MeniFabrika meniFabrika = new MeniFabrika();
 		meni = (MeniSefKuhinje) meniFabrika.napraviMeni("SEF_KUHINJE");
 		
 		paneli = new ArrayList<>(
-	            Arrays.asList(panelProfil,
-	                          panelJelovnik,
+	            Arrays.asList(new PanelProfil(),
+	                          new PanelJelovnik(),
 	                          new PanelTipoviJela(),
 	                          new PanelZahteviZaJelo()));
 		
+		add(paneli.get(0), BorderLayout.CENTER);
 		add(meni, BorderLayout.WEST);
 		
 		meni.getStavkaProfil().getDugmeStavke().addActionListener(new ActionListener() {
@@ -70,20 +70,4 @@ public class PocetniProzorSef extends PocetniProzor {
 			}
 		});
 	}
-	
-	private void osveziProzor() {
-		this.revalidate();
-		this.repaint();
-	}
-	
-	private void postaviPanel(String imePanela) {
-		for (JPanel panel : paneli) {
-			if (panel.getName().equals(imePanela)) {
-				add(panel, BorderLayout.CENTER);
-			} else {
-				remove(panel);
-			}
-		}
-	}
-	
 }

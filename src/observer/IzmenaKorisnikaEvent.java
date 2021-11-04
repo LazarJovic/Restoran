@@ -4,6 +4,10 @@ import java.util.EventObject;
 
 public class IzmenaKorisnikaEvent extends EventObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1334177919567093006L;
 	private String ime;
 	private String prezime;
 	private String telefon;

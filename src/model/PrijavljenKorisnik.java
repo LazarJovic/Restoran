@@ -1,6 +1,5 @@
 package model;
 
-import baza.BazaPodatakaKonekcija;
 import enums.Uloga;
 
 public class PrijavljenKorisnik {

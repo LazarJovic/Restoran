@@ -12,21 +12,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import izuzeci.BadCredentialsException;
 import izuzeci.MissingValueException;
-import izuzeci.NotFoundException;
 import kontroler.AuthKontroler;
-import model.PrijavljenKorisnik;
 import net.miginfocom.swing.MigLayout;
 import pogled.pocetni_prozor.PocetniProzor;
 import pogled.pocetni_prozor.PocetniProzorFabrika;
 
 public class PrijavaProzor extends JFrame {
 	
-	private JTextField tfKorIme;
-	private JTextField tfLozinka;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7465082845063921882L;
+	private TekstPolje tfKorIme;
+	private LozinkaPolje tfLozinka;
 	
 	private AuthKontroler authKontroler;
 	
@@ -35,32 +36,39 @@ public class PrijavaProzor extends JFrame {
 		setTitle("Prijava");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 	
 		this.authKontroler = new AuthKontroler();
 		
-		Font fntNaslov = PogledUtil.getRobotoFont(16, true);
-		Font fntLabela = PogledUtil.getRobotoFont(13, true);
+		Font fntNaslov = PogledUtil.getMaliNaslovFont();
+		Font fntLabela = PogledUtil.getLabelaFont();
+		Font fntTekstPolje = PogledUtil.getTeksPoljeFont();
 		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
-		Color clrForeground = Color.WHITE;
+		Color clrForeground = PogledUtil.getForegroundColor();
 		
 		
 		JPanel pnlPrijava = new JPanel();
+		
 		Labela lblNaslov = new Labela("Prijavite se na sistem restorana", fntNaslov, clrForeground);
+		
 		JLabel lblImage = new JLabel("");
 		Image image = new ImageIcon(this.getClass().getResource("/restaurant1.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
-		Labela lblKorIme = new Labela("Korisnicko ime: ", fntLabela, clrForeground);
-		tfKorIme = new JTextField(50);
+		
+		Labela lblKorIme = new Labela("Korisničko ime: ", fntLabela, clrForeground);
+		tfKorIme = new TekstPolje("", fntTekstPolje, 140, 30);
+		
 		Labela lblLozinka = new Labela("Lozinka: ", fntLabela, clrForeground);
-		tfLozinka = new JTextField(50);
+		tfLozinka = new LozinkaPolje("", 140, 30);
+		
 		FormaDugme btnPrijava = new FormaDugme("Prijava", clrPrimarna, clrForeground, 70, 30);
 		btnPrijava.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				try {
-					String uloga = authKontroler.login(tfKorIme.getText(), tfLozinka.getText());
-					close();
+					String uloga = authKontroler.login(tfKorIme.getText(), String.valueOf(tfLozinka.getPassword()));
+					zatvori();
 					PocetniProzor procetniProzor = new PocetniProzorFabrika().napraviPocetniProzor(uloga);
 					procetniProzor.setVisible(true);
 				} catch (MissingValueException e) {
@@ -72,6 +80,14 @@ public class PrijavaProzor extends JFrame {
 		});
 		
 		FormaDugme btnIzlaz = new FormaDugme("Izlaz", clrPrimarna, clrForeground, 70, 30);
+		btnIzlaz.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
+		});
 		
 		pnlPrijava.setBackground(clrPrimarna);
 		pnlPrijava.setLayout(new MigLayout("", "[][]", "30[]20[]20[]10[]10[]"));
@@ -87,7 +103,7 @@ public class PrijavaProzor extends JFrame {
 		add(pnlPrijava);
 	}
 	
-	private void close() {
+	private void zatvori() {
 		this.dispose();
 	}
 }

@@ -9,7 +9,6 @@ import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
 import izuzeci.ResultEmptyException;
 import model.Korisnik;
-import pogled.PogledUtil;
 import repozitorijum.KorisnikRepo;
 
 public class KorisnikKontroler {
@@ -21,8 +20,13 @@ public class KorisnikKontroler {
 		korisnikRepo = new KorisnikRepo();
 	}
 	
-	public Korisnik dobaviKorisnikaPoKorImenu(String korisnickoIme) {
-		return korisnikRepo.dobaviKorisnikaPoKorImenu(korisnickoIme);
+	public Korisnik dobaviKorisnikaPoKorImenu(String korisnickoIme) throws ResultEmptyException {
+		Korisnik korisnik = korisnikRepo.dobaviKorisnikaPoKorImenu(korisnickoIme);
+		if (korisnik == null) {
+			throw new ResultEmptyException("Ne postoji korisnik sa korisničkim imenom " + korisnickoIme);
+		}
+		
+		return korisnik;
 	}
 	
 	public List<Korisnik> dobaviKorisnike() throws ResultEmptyException {
@@ -86,7 +90,7 @@ public class KorisnikKontroler {
 		try {
 			parsiranDatumRodjenja = LocalDate.parse(datumRodjenja);	
 		} catch (DateTimeParseException e) {
-			throw new BadFormatException("Format datuma nije validan. Treba da bude oblika DD.MM.YYYY.");
+			throw new BadFormatException("Format datuma nije validan. Treba da bude oblika YYYY-MM-DD.");
 		}
 		
 		if (uloga.equals("Šef kuhinje")) {

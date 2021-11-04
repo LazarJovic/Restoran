@@ -9,17 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.EventObject;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.plaf.ComboBoxUI;
-import javax.swing.plaf.basic.BasicArrowButton;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import izuzeci.ResultEmptyException;
 import kontroler.KorisnikKontroler;
@@ -36,6 +30,10 @@ import pogled.tabela.TabelaZaposleni;
 
 public class PanelZaposleni extends JPanel implements Observer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6680414524078045993L;
 	private List<Korisnik> korisnici;
 	private KorisnikKontroler korisnikKontroler;
 	
@@ -44,30 +42,31 @@ public class PanelZaposleni extends JPanel implements Observer {
 	public PanelZaposleni() {
 		setName("Zaposleni");
 		setVisible(true);
-		setBackground(PogledUtil.getSekundarnaBoja());
+		
+		Font fntNaslov = PogledUtil.getVelikiNaslovFont();
+		Font fntTekstPolje = PogledUtil.getTeksPoljeFont();
+		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
+		Color clrSekundarna = PogledUtil.getSekundarnaBoja();
+		Color clrForeground = PogledUtil.getForegroundColor();
+		
+		setBackground(clrSekundarna);
 		
 		korisnikKontroler = new KorisnikKontroler();
 		try {
 			this.korisnici = korisnikKontroler.dobaviKorisnike();
 		} catch (ResultEmptyException e) {
-			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.INFORMATION_MESSAGE);
 		}
 		
-		Font fntNaslov = PogledUtil.getRobotoFont(24, true);
-		Font fntLabela = PogledUtil.getRobotoFont(16, true);
-		Font fntTekstPolje = PogledUtil.getRobotoFont(14, false);
-		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
-		Color clrTercijarna = PogledUtil.getTercijarnaBoja();
-		Color clrForeground = Color.WHITE;
-		
 		Labela lblNaslov = new Labela("Pregled i registrovanje zaposlenih", fntNaslov, clrForeground);
+		
 		JLabel lblImage = new JLabel("");
 		lblImage.setPreferredSize(new Dimension(80, 80));
 		Image image = new ImageIcon(this.getClass().getResource("/employees96.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
+		
 		Labela lblTipZaposlenog = new Labela("Tip zaposlenog:", fntTekstPolje, clrForeground);
-		String[] tipoviZaposlenih = { "Vlasnik", "Menadžer", "Šef kuhinje", "Konobar"};
-		PadajucaLista plTipoviZaposlenih = new PadajucaLista(tipoviZaposlenih,
+		PadajucaLista plTipoviZaposlenih = new PadajucaLista(PogledUtil.getTipoviZaposlenih(),
 				clrPrimarna, clrForeground, fntTekstPolje, 140, 30);
 		
 		FormaDugme btnDodajZaposlenog = new FormaDugme("Registruj zaposlenog", clrPrimarna, clrForeground, 150, 20);

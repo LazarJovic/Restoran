@@ -25,7 +25,7 @@ public class KorisnickiNalogRepo {
 				korisnickiNalog = new KorisnickiNalog(resultSet.getString(2), resultSet.getString(3), getUloga(resultSet.getString(4)));
 			}
 		} catch (SQLException e1) {
-			return null;
+			return korisnickiNalog;
 		}
 		
 		return korisnickiNalog;

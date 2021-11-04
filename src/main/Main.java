@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		BazaPodatakaKonekcija konekcija = BazaPodatakaKonekcija.getInstance();
+		BazaPodatakaKonekcija.getInstance();
 		PrijavaProzor lw = new PrijavaProzor();
 		lw.setVisible(true);
 	}

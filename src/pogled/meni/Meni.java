@@ -12,6 +12,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class Meni extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6278113298569448196L;
 	private MeniStavka stavkaProfil;
 	private MeniStavka stavkaJelovnik;
 	

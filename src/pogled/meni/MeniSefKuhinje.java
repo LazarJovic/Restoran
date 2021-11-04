@@ -1,9 +1,11 @@
 package pogled.meni;
 
-import javax.swing.JLabel;
-
 public class MeniSefKuhinje extends Meni {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -670002200747993656L;
 	private MeniStavka stavkaTipoviJela;
 	private MeniStavka stavkaZahteviZaJelo;
 	

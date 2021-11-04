@@ -1,9 +1,11 @@
 package pogled.meni;
 
-import javax.swing.JLabel;
-
 public class MeniVlasnik extends Meni {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4294229498194545072L;
 	private MeniStavka stavkaZaposleni;
 	private MeniStavka stavkaZahteviZaJelo;
 	private MeniStavka stavkaRezervacije;

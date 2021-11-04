@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,9 +16,14 @@ import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
-@SuppressWarnings({ "serial", "rawtypes" })
+@SuppressWarnings("rawtypes")
 public class PadajucaLista extends JComboBox {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5940640216385227698L;
+
 	public PadajucaLista() {}
 	
 	@SuppressWarnings("unchecked")

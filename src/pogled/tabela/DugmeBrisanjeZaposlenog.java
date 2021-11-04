@@ -13,11 +13,13 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import pogled.PogledUtil;
-
 public class DugmeBrisanjeZaposlenog extends AbstractCellEditor
 	implements TableCellRenderer, TableCellEditor, MouseListener  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7038624689794191147L;
 	private JTable tabela;
 	private JButton prikazDugme;
 	private JButton akcijaDugme;

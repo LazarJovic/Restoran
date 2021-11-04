@@ -2,16 +2,17 @@ package pogled;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class FormaDugme extends JButton {
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5100936599710414289L;
+
 	public FormaDugme(String text, Color backColor, Color foreColor, int width, int height) {
 		this.setText(text);
 		this.setPreferredSize(new Dimension(width, height));

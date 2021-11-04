@@ -2,7 +2,6 @@ package kontroler;
 
 import izuzeci.BadCredentialsException;
 import izuzeci.MissingValueException;
-import izuzeci.NotFoundException;
 import model.KorisnickiNalog;
 import model.PrijavljenKorisnik;
 import repozitorijum.KorisnickiNalogRepo;
@@ -25,7 +24,7 @@ public class AuthKontroler {
 		KorisnickiNalog korisnickiNalog = korisnickiNalogRepo.dobaviNalogPoKorisnickomImenu(korisnickoIme);
 		
 		if (korisnickiNalog == null || !korisnickiNalog.getLozinka().equals(lozinka)) {
-			throw new BadCredentialsException("Uneseni kredencijali nisu poklapajući.");
+			throw new BadCredentialsException("Uneseni kredencijali nisu odgovarajući.");
 		}
 		
 		PrijavljenKorisnik prijavljenKorisnik = PrijavljenKorisnik.getInstance();

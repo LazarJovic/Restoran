@@ -7,18 +7,16 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.EventObject;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import izuzeci.MissingValueException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
-import observer.IzmenaKorisnikaEvent;
-import observer.Observer;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PogledUtil;
@@ -26,8 +24,10 @@ import pogled.TekstPolje;
 
 public class DialogIzmenaProfila extends JDialog {
 	
-	private Korisnik korisnik;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5983854443986119609L;
 	private TekstPolje tfIme;
 	private TekstPolje tfPrezime;
 	private TekstPolje tfTelefon;
@@ -37,14 +37,15 @@ public class DialogIzmenaProfila extends JDialog {
 		setSize(new Dimension(420, 550));
 		setLocationRelativeTo(null);
 		setTitle("Izmena profila");
-		this.getContentPane().setBackground(PogledUtil.getPrimarnaBoja());
 		
-		this.korisnik = korisnik;
-		
-		Font fntLabela = PogledUtil.getRobotoFont(16, true);
-		Font fntTekstPolje = PogledUtil.getRobotoFont(14, false);
+		Font fntLabela = PogledUtil.getLabelaFont();
+		Font fntTekstPolje = PogledUtil.getTeksPoljeFont();
+		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
+		Color clrSekundarna = PogledUtil.getSekundarnaBoja();
 		Color clrTercijarna = PogledUtil.getTercijarnaBoja();
-		Color clrForeground = Color.WHITE;
+		Color clrForeground = PogledUtil.getForegroundColor();
+		
+		this.getContentPane().setBackground(clrPrimarna);
 		
 		JLabel lblImage = new JLabel("");
 		lblImage.setPreferredSize(new Dimension(80, 80));
@@ -63,19 +64,18 @@ public class DialogIzmenaProfila extends JDialog {
 		Labela lblEmail = new Labela("Email:", fntLabela, clrTercijarna);
 		tfEmail = new TekstPolje(korisnik.getEmail(), fntTekstPolje, 140, 30);
 		
-		FormaDugme btnIzmena = new FormaDugme("Izmeni", PogledUtil.getSekundarnaBoja(), clrForeground, 150, 20);
+		FormaDugme btnIzmena = new FormaDugme("Izmeni", clrSekundarna, clrForeground, 150, 20);
 		btnIzmena.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					korisnikKontroler.izmeniKorisnika(tfIme.getText(), tfPrezime.getText(), tfTelefon.getText(), tfEmail.getText(), korisnik.getEmail());
-					close();
+					zatvori();
 				} catch (MissingValueException e1) {
-					System.out.println("missing value"); //TODO: Handle errors
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
-					System.out.println("sql exception");
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -94,7 +94,7 @@ public class DialogIzmenaProfila extends JDialog {
 		add(btnIzmena, "wrap, span2, align center");
 	}
 	
-	private void close() {
+	private void zatvori() {
 		this.dispose();
 	}
 }

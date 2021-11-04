@@ -11,16 +11,20 @@ import pogled.PogledUtil;
 
 public class TabelaZaposleni extends JTable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1383629419392370387L;
+
 	public TabelaZaposleni(TabelaModelZaposleni tabelaModelZaposleni) {
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(tabelaModelZaposleni);
-//		this.getTableHeader().setOpaque(false);
 		this.getTableHeader().setBackground(PogledUtil.getPrimarnaBoja());
-		this.getTableHeader().setForeground(Color.WHITE);
-		this.getTableHeader().setFont(PogledUtil.getRobotoFont(14, true));
-		this.setFont(PogledUtil.getRobotoFont(14, false));
+		this.getTableHeader().setForeground(PogledUtil.getForegroundColor());
+		this.getTableHeader().setFont(PogledUtil.getTeksPoljeFont());
+		this.setFont(PogledUtil.getTeksPoljeFont());
 		new DugmeBrisanjeZaposlenog(this, 6);
 	}
 

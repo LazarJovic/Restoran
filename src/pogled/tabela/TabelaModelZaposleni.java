@@ -14,6 +14,10 @@ import pogled.PogledUtil;
 
 public class TabelaModelZaposleni extends AbstractTableModel implements Publisher {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8628930585725232299L;
 	private List<Korisnik> korisnici;
 	private List<Observer> observers;
 	

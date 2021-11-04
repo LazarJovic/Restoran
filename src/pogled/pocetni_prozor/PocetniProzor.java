@@ -2,37 +2,41 @@ package pogled.pocetni_prozor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JFrame;
-
-import pogled.panel.PanelJelovnik;
-import pogled.panel.PanelProfil;
+import javax.swing.JPanel;
 
 public class PocetniProzor extends JFrame {
 
-	protected PanelProfil panelProfil;
-	protected PanelJelovnik panelJelovnik;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7677437678594445511L;
+	protected List<JPanel> paneli;
 	
 	public PocetniProzor() {
 		setSize(new Dimension(1300, 800));
 		setTitle("Sistem za upravljanje restoranom");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setLayout(new BorderLayout());
-		
-		this.panelProfil = new PanelProfil();
-		this.panelJelovnik = new PanelJelovnik();
-		
-		add(panelProfil, BorderLayout.CENTER);
-		//add(panelJelovnik, BorderLayout.CENTER);
 	}
 	
-	public PanelProfil getPanelProfil() {
-		return this.panelProfil;
+	protected void osveziProzor() {
+		this.revalidate();
+		this.repaint();
 	}
 	
-	public PanelJelovnik getPanelJelovnik() {
-		return this.panelJelovnik;
+	protected void postaviPanel(String imePanela) {
+		for (JPanel panel : paneli) {
+			if (panel.getName().equals(imePanela)) {
+				add(panel, BorderLayout.CENTER);
+			} else {
+				remove(panel);
+			}
+		}
 	}
 	
 }

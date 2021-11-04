@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.JOptionPane;
 
 import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
@@ -20,6 +20,7 @@ import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
+import pogled.LozinkaPolje;
 import pogled.PadajucaLista;
 import pogled.PogledUtil;
 import pogled.TekstPolje;
@@ -27,15 +28,17 @@ import pogled.tabela.TabelaModelZaposleni;
 
 public class DijalogRegistrovanjeZaposlenog extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5054215967715312072L;
 	private TekstPolje tfIme;
 	private TekstPolje tfPrezime;
 	private TekstPolje tfTelefon;
 	private TekstPolje tfEmail;
 	private TekstPolje tfDatumRodjenja;
 	private TekstPolje tfKorIme;
-	private TekstPolje tfLozinka;
-	
-	private TabelaModelZaposleni tabelaModelZaposleni;
+	private LozinkaPolje tfLozinka;
 	
 	public DijalogRegistrovanjeZaposlenog() {}
 	
@@ -43,16 +46,15 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 		setSize(new Dimension(520, 650));
 		setLocationRelativeTo(null);
 		setTitle("Registrovanje zaposlenog");
-		this.getContentPane().setBackground(PogledUtil.getPrimarnaBoja());
 		
-		this.tabelaModelZaposleni = tabelaModelZaposleni;
-		
-		Font fntLabela = PogledUtil.getRobotoFont(16, true);
-		Font fntTekstPolje = PogledUtil.getRobotoFont(14, false);
+		Font fntLabela = PogledUtil.getLabelaFont();
+		Font fntTekstPolje = PogledUtil.getTeksPoljeFont();
 		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
 		Color clrSekundarna = PogledUtil.getSekundarnaBoja();
 		Color clrTercijarna = PogledUtil.getTercijarnaBoja();
-		Color clrForeground = Color.WHITE;
+		Color clrForeground = PogledUtil.getForegroundColor();
+		
+		this.getContentPane().setBackground(clrPrimarna);
 		
 		JLabel lblImage = new JLabel("");
 		lblImage.setPreferredSize(new Dimension(80, 80));
@@ -78,11 +80,10 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 		tfKorIme = new TekstPolje("yy", fntTekstPolje, 140, 30);
 		
 		Labela lblLozinka = new Labela("Lozinka:", fntLabela, clrTercijarna);
-		tfLozinka = new TekstPolje("yy", fntTekstPolje, 140, 30);
+		tfLozinka = new LozinkaPolje("yy", 140, 30);
 		
 		Labela lblTipZaposlenog = new Labela("Tip zaposlenog:", fntLabela, clrTercijarna);
-		String[] tipoviZaposlenih = { "Vlasnik", "Menadžer", "Šef kuhinje", "Konobar"};
-		PadajucaLista plTipoviZaposlenih = new PadajucaLista(tipoviZaposlenih,
+		PadajucaLista plTipoviZaposlenih = new PadajucaLista(PogledUtil.getTipoviZaposlenih(),
 				clrSekundarna, clrForeground, fntTekstPolje, 140, 30);
 		
 		FormaDugme btnRegistruj = new FormaDugme("Registruj", clrSekundarna, clrForeground, 150, 20);
@@ -92,20 +93,17 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Korisnik korisnik = korisnikKontroler.registrujKorisnika(tfIme.getText(), tfPrezime.getText(), tfTelefon.getText(),
-							tfEmail.getText(), tfDatumRodjenja.getText(), tfKorIme.getText(), tfLozinka.getText(),
+							tfEmail.getText(), tfDatumRodjenja.getText(), tfKorIme.getText(), String.valueOf(tfLozinka.getPassword()),
 							(String) plTipoviZaposlenih.getSelectedItem());
 					tabelaModelZaposleni.dodajKorisnika(korisnik);
 					tabelaModelZaposleni.notifyObservers();
-					close();
+					zatvori();
 				} catch (MissingValueException e1) {
-					System.out.println("missing value"); //TODO: Handle errors
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
-					System.out.println("sql exception");
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
 				} catch (BadFormatException e1) {
-					System.out.println("los format");
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -132,7 +130,7 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 		add(btnRegistruj, "wrap, span2, align center");
 	}
 	
-	private void close() {
+	private void zatvori() {
 		this.dispose();
 	}
 }

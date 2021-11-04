@@ -10,8 +10,10 @@ import java.util.EventObject;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import izuzeci.ResultEmptyException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import model.PrijavljenKorisnik;
@@ -25,6 +27,10 @@ import pogled.dijalog.DialogIzmenaProfila;
 
 public class PanelProfil extends JPanel implements Observer {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2302967480314898683L;
 	private PrijavljenKorisnik prijavljenKorisnik = PrijavljenKorisnik.getInstance();
 	private Korisnik korisnik;
 	private KorisnikKontroler korisnikKontroler;
@@ -37,38 +43,53 @@ public class PanelProfil extends JPanel implements Observer {
 	public PanelProfil() {
 		setName("Profil");
 		setVisible(true);
-		setBackground(PogledUtil.getSekundarnaBoja());
+		
+		Font fntNaslov = PogledUtil.getVelikiNaslovFont();
+		Font fntLabela = PogledUtil.getLabelaFont();
+		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
+		Color clrSekundarna = PogledUtil.getSekundarnaBoja();
+		Color clrTercijarna = PogledUtil.getTercijarnaBoja();
+		Color clrForeground = PogledUtil.getForegroundColor();
+		
+		setBackground(clrSekundarna);
 		
 		korisnikKontroler = new KorisnikKontroler();
-		korisnik = korisnikKontroler.dobaviKorisnikaPoKorImenu(prijavljenKorisnik.getKorisnickoIme());
+		try {
+			korisnik = korisnikKontroler.dobaviKorisnikaPoKorImenu(prijavljenKorisnik.getKorisnickoIme());	
+		} catch (ResultEmptyException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.ERROR_MESSAGE);
+		}
 		korisnikKontroler.setKorisnik(korisnik);
 		korisnik.addObserver(this);
 		
-		Font fntNaslov = PogledUtil.getRobotoFont(24, true);
-		Font fntLabela = PogledUtil.getRobotoFont(16, true);
-		Color clrPrimarna = PogledUtil.getPrimarnaBoja();
-		Color clrTercijarna = PogledUtil.getTercijarnaBoja();
-		Color clrForeground = Color.WHITE;
-		
 		Labela lblNaslov = new Labela("Pregled i izmena profilnih podataka", fntNaslov, clrForeground);
+		
 		JLabel lblImage = new JLabel("");
 		lblImage.setPreferredSize(new Dimension(80, 80));
 		Image image = new ImageIcon(this.getClass().getResource("/profile96.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
+		
 		Labela lblIme = new Labela("Ime:", fntLabela, clrTercijarna);
 		lblImeVr = new Labela(korisnik.getIme(), fntLabela, clrForeground);
+		
 		Labela lblPrezime = new Labela("Prezime:", fntLabela, clrTercijarna);
 		lblPrezimeVr = new Labela(korisnik.getPrezime(), fntLabela, clrForeground);
+		
 		Labela lblKorIme = new Labela("Korisnicko ime:", fntLabela, clrTercijarna);
 		Labela lblKorImeVr = new Labela(korisnik.getKorisnickiNalog().getKorisnickoIme(), fntLabela, clrForeground);
+		
 		Labela lblUloga = new Labela("Uloga:", fntLabela, clrTercijarna);
 		Labela lblUlogaVr = new Labela(korisnik.getKorisnickiNalog().getUloga().toString(), fntLabela, clrForeground);
+		
 		Labela lblTelefon = new Labela("Telefon:", fntLabela, clrTercijarna);
 		lblTelefonVr = new Labela(korisnik.getTelefon(), fntLabela, clrForeground);
+		
 		Labela lblEmail = new Labela("Email:", fntLabela, clrTercijarna);
 		lblEmailVr = new Labela(korisnik.getEmail(), fntLabela, clrForeground);
+		
 		Labela lblDatumZap = new Labela("Datum zaposlenja:", fntLabela, clrTercijarna);
 		Labela lblDatumZapVr = new Labela(PogledUtil.getFormatDatuma().format(korisnik.getDatumZaposlenja()), fntLabela, clrForeground);
+		
 		Labela lblDatumRodj = new Labela("Datum rodjenja:", fntLabela, clrTercijarna);
 		Labela lblDatumRodjVr = new Labela(PogledUtil.getFormatDatuma().format(korisnik.getDatumRodjenja()), fntLabela, clrForeground);
 	

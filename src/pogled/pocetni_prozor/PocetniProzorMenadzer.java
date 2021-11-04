@@ -5,30 +5,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JPanel;
 
 import pogled.meni.MeniFabrika;
 import pogled.meni.MeniMenadzer;
+import pogled.panel.PanelJelovnik;
+import pogled.panel.PanelProfil;
 import pogled.panel.PanelRezervacije;
-import pogled.panel.PanelTipoviJela;
-import pogled.panel.PanelZahteviZaJelo;
 
 public class PocetniProzorMenadzer extends PocetniProzor {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -458287390081596178L;
 	private MeniMenadzer meni;
-	private List<JPanel> paneli;
 	
 	public PocetniProzorMenadzer() {
 		MeniFabrika meniFabrika = new MeniFabrika();
 		meni = (MeniMenadzer) meniFabrika.napraviMeni("MENADZER");
 		
 		paneli = new ArrayList<>(
-	            Arrays.asList(panelProfil,
-	                          panelJelovnik,
+	            Arrays.asList(new PanelProfil(),
+	                          new PanelJelovnik(),
 	                          new PanelRezervacije()));
 		
+		add(paneli.get(0), BorderLayout.CENTER);
 		add(meni, BorderLayout.WEST);
 		
 		meni.getStavkaProfil().getDugmeStavke().addActionListener(new ActionListener() {
@@ -57,20 +58,5 @@ public class PocetniProzorMenadzer extends PocetniProzor {
 				osveziProzor();
 			}
 		});
-	}
-	
-	private void osveziProzor() {
-		this.revalidate();
-		this.repaint();
-	}
-	
-	private void postaviPanel(String imePanela) {
-		for (JPanel panel : paneli) {
-			if (panel.getName().equals(imePanela)) {
-				add(panel, BorderLayout.CENTER);
-			} else {
-				remove(panel);
-			}
-		}
 	}
 }

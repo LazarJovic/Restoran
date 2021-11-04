@@ -13,6 +13,10 @@ import pogled.FormaDugme;
 
 public class MeniStavka extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7627665089080505037L;
 	private JLabel lblIkonica;
 	private FormaDugme btnStavka;
 	
