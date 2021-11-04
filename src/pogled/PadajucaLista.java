@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,7 @@ import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
+@SuppressWarnings({ "serial", "rawtypes" })
 public class PadajucaLista extends JComboBox {
 	
 	public PadajucaLista() {}
@@ -30,21 +32,23 @@ public class PadajucaLista extends JComboBox {
 //		        BorderFactory.createEmptyBorder(0, 0, 0, 0)));
 		this.setFont(font);
 		this.setPreferredSize(new Dimension(sirina, visina));
-		this.setUI(StrelicaUI.createUI(this));
-		this.setRenderer(new PadajucaListaRenderer(this.getRenderer()));
-		this.setEditable(true);
+		this.setUI(StrelicaUI.createUI(this, pozadinaBoja));
+		this.setRenderer(new PadajucaListaRenderer(this.getRenderer(), pozadinaBoja));
+		this.setEditable(false);
 	}
 
 }
 
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "serial"})
 class PadajucaListaRenderer extends DefaultListCellRenderer {
 
 	  
 	  private ListCellRenderer defaultRenderer;
+	  private Color boja;
 
-	  public PadajucaListaRenderer(ListCellRenderer defaultRenderer) {
+	  public PadajucaListaRenderer(ListCellRenderer defaultRenderer, Color boja) {
 	    this.defaultRenderer = defaultRenderer;
+	    this.boja = boja;
 	  }
 
 	  @Override
@@ -56,7 +60,7 @@ class PadajucaListaRenderer extends DefaultListCellRenderer {
 	      if (isSelected) {
 	        c.setBackground(Color.white);
 	      } else {
-	        c.setBackground(PogledUtil.getPrimarnaBoja());
+	        c.setBackground(boja);
 	      }
 	    } else {
 	      c.setBackground(Color.red);
@@ -69,14 +73,20 @@ class PadajucaListaRenderer extends DefaultListCellRenderer {
 
 class StrelicaUI extends BasicComboBoxUI {
 
-    public static ComboBoxUI createUI(JComponent c) {
-        return new StrelicaUI();
+	private Color pozadinaBoja;
+	
+	public StrelicaUI(Color pozadinaBoja) {
+		this.pozadinaBoja = pozadinaBoja;
+	}
+	
+    public static ComboBoxUI createUI(JComponent c, Color pozadinaBoja) {
+        return new StrelicaUI(pozadinaBoja);
     }
 
     @Override protected JButton createArrowButton() {
         return new BasicArrowButton(
             BasicArrowButton.SOUTH,
-            PogledUtil.getPrimarnaBoja(), PogledUtil.getPrimarnaBoja(),
+            pozadinaBoja, pozadinaBoja,
             Color.WHITE, Color.WHITE);
     }
 }

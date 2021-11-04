@@ -1,11 +1,15 @@
 package kontroler;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
 import izuzeci.ResultEmptyException;
 import model.Korisnik;
+import pogled.PogledUtil;
 import repozitorijum.KorisnikRepo;
 
 public class KorisnikKontroler {
@@ -54,6 +58,38 @@ public class KorisnikKontroler {
 		korisnik.setTelefon(telefon);
 		korisnik.setEmail(email);
 		korisnik.notifyObservers();
+	}
+	
+	public Korisnik registrujKorisnika(String ime, String prezime, String telefon, String email, String datumRodjenja,
+			String korIme, String lozinka, String uloga) throws MissingValueException, BadFormatException, SQLException {
+		if (checkIfNullOrEmpty(ime)) {
+			throw new MissingValueException("Nije validno uneto ime.");
+		} else if (checkIfNullOrEmpty(prezime)) {
+			throw new MissingValueException("Nije validno uneto prezime.");
+		} else if (checkIfNullOrEmpty(telefon)) {
+			throw new MissingValueException("Nije validno unet telefon.");
+		} else if (checkIfNullOrEmpty(email)) {
+			throw new MissingValueException("Nije validno uneta email adresa.");
+		} else if (checkIfNullOrEmpty(datumRodjenja)) {
+			throw new MissingValueException("Nije unet datum rodjenja.");
+		} else if (checkIfNullOrEmpty(korIme)) {
+			throw new MissingValueException("Nije uneto korisničko ime.");
+		} else if (checkIfNullOrEmpty(lozinka)) {
+			throw new MissingValueException("Nije uneta lozinka.");
+		} else if (checkIfNullOrEmpty(uloga)) {
+			throw new MissingValueException("Nije odabrana uloga zaposlenog.");
+		}
+		
+		//TODO: Validacija - email, telefon, lozinka
+		
+		LocalDate parsiranDatumRodjenja = null;
+		try {
+			parsiranDatumRodjenja = LocalDate.parse(datumRodjenja);	
+		} catch (DateTimeParseException e) {
+			throw new BadFormatException("Format datuma nije validan. Treba da bude oblika DD.MM.YYYY.");
+		}
+		
+		return korisnikRepo.dodajKorisnika(ime, prezime, telefon, email, parsiranDatumRodjenja, korIme, lozinka, uloga);
 	}
 	
 	private boolean checkIfNullOrEmpty(String input) {

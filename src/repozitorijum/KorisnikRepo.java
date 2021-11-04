@@ -3,6 +3,7 @@ package repozitorijum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,11 @@ import model.Korisnik;
 
 public class KorisnikRepo {
 
-	public KorisnikRepo() {}
+	private KorisnickiNalogRepo korisnickiNalogRepo;
+	
+	public KorisnikRepo() {
+		this.korisnickiNalogRepo = new KorisnickiNalogRepo();
+	}
 	
 	public List<Korisnik> dobaviKorisnike() {
 		String dobaviKorisnike = 
@@ -68,6 +73,31 @@ public class KorisnikRepo {
 		preparedStatement.setString(4, email);
 		preparedStatement.setString(5, oldEmail);
 		preparedStatement.executeUpdate();
+	}
+	
+	public Korisnik dodajKorisnika(String ime, String prezime, String telefon, String email, LocalDate datumRodjenja,
+			String korIme, String lozinka, String uloga) throws SQLException {
+		long nalogId = korisnickiNalogRepo.dodajKorisnickiNalog(korIme, lozinka, uloga);
+		LocalDate datumZaposlenja = LocalDate.now();
+		String dodajKorsnika = 
+				"INSERT INTO Korisnik (ime, prezime, telefon, email, datum_rodjenja, datume_zaposlenja, nalog_id)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatement = null;
+		preparedStatement = BazaPodatakaKonekcija.getInstance().getKonekcija().prepareStatement(dodajKorsnika, Statement.RETURN_GENERATED_KEYS);
+		preparedStatement.setString(1, ime);
+		preparedStatement.setString(2, prezime);
+		preparedStatement.setString(3, telefon);
+		preparedStatement.setString(4, email);
+		preparedStatement.setString(5, datumRodjenja.toString());
+		preparedStatement.setString(6, datumZaposlenja.toString());
+		preparedStatement.setLong(7, nalogId);
+		preparedStatement.execute();
+		if (preparedStatement.getUpdateCount() <= 0) {
+			return null;
+		}
+		
+		return new Korisnik(ime, prezime, telefon, email, datumRodjenja, datumZaposlenja,
+				new KorisnickiNalog(korIme, lozinka, getUloga(uloga.toUpperCase())));
 	}
 	
 	private Uloga getUloga(String uloga) {

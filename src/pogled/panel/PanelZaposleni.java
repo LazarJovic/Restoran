@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -26,6 +28,7 @@ import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
 import pogled.PogledUtil;
+import pogled.dijalog.DijalogRegistrovanjeZaposlenog;
 import pogled.tabela.TabelaModelZaposleni;
 import pogled.tabela.TabelaZaposleni;
 
@@ -63,8 +66,18 @@ public class PanelZaposleni extends JPanel {
 		Labela lblTipZaposlenog = new Labela("Tip zaposlenog:", fntTekstPolje, clrForeground);
 		String[] tipoviZaposlenih = { "Vlasnik", "Menadžer", "Šef kuhinje", "Konobar"};
 		PadajucaLista plTipoviZaposlenih = new PadajucaLista(tipoviZaposlenih,
-				clrPrimarna, clrForeground, fntTekstPolje, 100, 30);
+				clrPrimarna, clrForeground, fntTekstPolje, 140, 30);
+		
 		FormaDugme btnDodajZaposlenog = new FormaDugme("Registruj zaposlenog", clrPrimarna, clrForeground, 150, 20);
+		btnDodajZaposlenog.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DijalogRegistrovanjeZaposlenog dijalogRegistrovanjeZaposlenog = new DijalogRegistrovanjeZaposlenog(korisnikKontroler, tabelaZaposleni);
+				dijalogRegistrovanjeZaposlenog.setVisible(true);
+			}
+		});
+		
 		FormaDugme btnPretrazi = new FormaDugme("Pretraži", clrPrimarna, clrForeground, 75, 20);
 		
 		setLayout(new MigLayout("", "80[]40[]", "90[]30[]40[]"));

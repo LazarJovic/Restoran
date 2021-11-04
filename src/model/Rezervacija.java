@@ -9,19 +9,16 @@ public class Rezervacija {
 	private LocalDateTime kreirana;
 	private boolean otkazana;
 	private Gost gost;
-	private Menadzer menadzer;
 	
 	public Rezervacija() {}
 
-	public Rezervacija(int brojMesta, LocalDateTime vreme, LocalDateTime kreirana, boolean otkazana, Gost gost,
-			Menadzer menadzer) {
+	public Rezervacija(int brojMesta, LocalDateTime vreme, LocalDateTime kreirana, boolean otkazana, Gost gost) {
 		super();
 		this.brojMesta = brojMesta;
 		this.vreme = vreme;
 		this.kreirana = kreirana;
 		this.otkazana = otkazana;
 		this.gost = gost;
-		this.menadzer = menadzer;
 	}
 
 	public int getBrojMesta() {
@@ -62,13 +59,5 @@ public class Rezervacija {
 
 	public void setGost(Gost gost) {
 		this.gost = gost;
-	}
-
-	public Menadzer getMenadzer() {
-		return menadzer;
-	}
-
-	public void setMenadzer(Menadzer menadzer) {
-		this.menadzer = menadzer;
 	}
 }
