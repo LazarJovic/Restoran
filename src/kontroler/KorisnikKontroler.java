@@ -89,6 +89,12 @@ public class KorisnikKontroler {
 			throw new BadFormatException("Format datuma nije validan. Treba da bude oblika DD.MM.YYYY.");
 		}
 		
+		if (uloga.equals("Šef kuhinje")) {
+			uloga = "SEF_KUHINJE";
+		} else if (uloga.equals("Menadžer")) {
+			uloga = "MENADZER";
+		}
+		
 		return korisnikRepo.dodajKorisnika(ime, prezime, telefon, email, parsiranDatumRodjenja, korIme, lozinka, uloga);
 	}
 	

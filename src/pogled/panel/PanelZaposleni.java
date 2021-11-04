@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -24,6 +25,7 @@ import izuzeci.ResultEmptyException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
+import observer.Observer;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
@@ -32,7 +34,7 @@ import pogled.dijalog.DijalogRegistrovanjeZaposlenog;
 import pogled.tabela.TabelaModelZaposleni;
 import pogled.tabela.TabelaZaposleni;
 
-public class PanelZaposleni extends JPanel {
+public class PanelZaposleni extends JPanel implements Observer {
 
 	private List<Korisnik> korisnici;
 	private KorisnikKontroler korisnikKontroler;
@@ -73,7 +75,7 @@ public class PanelZaposleni extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DijalogRegistrovanjeZaposlenog dijalogRegistrovanjeZaposlenog = new DijalogRegistrovanjeZaposlenog(korisnikKontroler, tabelaZaposleni);
+				DijalogRegistrovanjeZaposlenog dijalogRegistrovanjeZaposlenog = new DijalogRegistrovanjeZaposlenog(korisnikKontroler, (TabelaModelZaposleni) tabelaZaposleni.getModel());
 				dijalogRegistrovanjeZaposlenog.setVisible(true);
 			}
 		});
@@ -101,6 +103,7 @@ public class PanelZaposleni extends JPanel {
 	private void inicijalizujTabeluZaposlenih() {
 		
 		TabelaModelZaposleni tabelaModelZaposleni = new TabelaModelZaposleni(korisnici);
+		tabelaModelZaposleni.addObserver(this);
 		this.tabelaZaposleni = new TabelaZaposleni(tabelaModelZaposleni);
 		JScrollPane scrollPane = new JScrollPane(tabelaZaposleni);
 		scrollPane.setPreferredSize(new Dimension(800, 500));
@@ -108,5 +111,10 @@ public class PanelZaposleni extends JPanel {
 		add(scrollPane, "wrap, span2, align center");
 		
 		this.azurirajPrikaz();
+	}
+
+	@Override
+	public void updatePerformed(EventObject e) {
+		azurirajPrikaz();
 	}
 }

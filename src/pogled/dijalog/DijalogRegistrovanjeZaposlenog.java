@@ -23,6 +23,7 @@ import pogled.Labela;
 import pogled.PadajucaLista;
 import pogled.PogledUtil;
 import pogled.TekstPolje;
+import pogled.tabela.TabelaModelZaposleni;
 
 public class DijalogRegistrovanjeZaposlenog extends JDialog {
 	
@@ -34,13 +35,17 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 	private TekstPolje tfKorIme;
 	private TekstPolje tfLozinka;
 	
+	private TabelaModelZaposleni tabelaModelZaposleni;
+	
 	public DijalogRegistrovanjeZaposlenog() {}
 	
-	public DijalogRegistrovanjeZaposlenog(KorisnikKontroler korisnikKontroler, JTable table) {
+	public DijalogRegistrovanjeZaposlenog(KorisnikKontroler korisnikKontroler, TabelaModelZaposleni tabelaModelZaposleni) {
 		setSize(new Dimension(520, 650));
 		setLocationRelativeTo(null);
 		setTitle("Registrovanje zaposlenog");
 		this.getContentPane().setBackground(PogledUtil.getPrimarnaBoja());
+		
+		this.tabelaModelZaposleni = tabelaModelZaposleni;
 		
 		Font fntLabela = PogledUtil.getRobotoFont(16, true);
 		Font fntTekstPolje = PogledUtil.getRobotoFont(14, false);
@@ -89,6 +94,8 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 					Korisnik korisnik = korisnikKontroler.registrujKorisnika(tfIme.getText(), tfPrezime.getText(), tfTelefon.getText(),
 							tfEmail.getText(), tfDatumRodjenja.getText(), tfKorIme.getText(), tfLozinka.getText(),
 							(String) plTipoviZaposlenih.getSelectedItem());
+					tabelaModelZaposleni.dodajKorisnika(korisnik);
+					tabelaModelZaposleni.notifyObservers();
 					close();
 				} catch (MissingValueException e1) {
 					System.out.println("missing value"); //TODO: Handle errors

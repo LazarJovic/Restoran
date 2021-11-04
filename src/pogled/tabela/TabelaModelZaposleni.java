@@ -1,19 +1,28 @@
 package pogled.tabela;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.table.AbstractTableModel;
 
 import model.Korisnik;
+import observer.IzmenaTabeleEvent;
+import observer.Observer;
+import observer.Publisher;
 import pogled.PogledUtil;
 
-public class TabelaModelZaposleni extends AbstractTableModel {
+public class TabelaModelZaposleni extends AbstractTableModel implements Publisher {
 
 	private List<Korisnik> korisnici;
+	private List<Observer> observers;
 	
 	public TabelaModelZaposleni(List<Korisnik> korisnici) {
 		this.korisnici = korisnici;
+	}
+	
+	public void dodajKorisnika(Korisnik korisnik) {
+		this.korisnici.add(korisnik);
 	}
 	
 	@Override
@@ -89,6 +98,27 @@ public class TabelaModelZaposleni extends AbstractTableModel {
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return columnIndex == 6;
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		if (observers == null)
+			observers = new ArrayList<Observer>();
+		observers.add(observer);	
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		if (null == observers)
+			return;
+		observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer observer : observers) {
+			observer.updatePerformed(new IzmenaTabeleEvent());
+		}
 	}
 
 }
