@@ -16,5 +16,6 @@ public class Labela extends JLabel {
 		setText(tekst);
 		setFont(font);
 		setForeground(frgColor);
+		setName("Moja labela");
 	}
 }

@@ -31,9 +31,6 @@ public class PadajucaLista extends JComboBox {
 		super(opcije);
 		this.setBackground(pozadinaBoja);
 		this.setForeground(prednjaBoja);
-//		this.setBorder(BorderFactory.createCompoundBorder(
-//		        BorderFactory.createLineBorder(prednjaBoja, 1), 
-//		        BorderFactory.createEmptyBorder(0, 0, 0, 0)));
 		this.setFont(font);
 		this.setPreferredSize(new Dimension(sirina, visina));
 		this.setUI(StrelicaUI.createUI(this, pozadinaBoja));
