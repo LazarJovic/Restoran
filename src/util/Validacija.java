@@ -32,20 +32,20 @@ public class Validacija {
 	
 	private static boolean proveriLozinku(String str) {
 	    char ch;
-	    boolean capitalFlag = false;
-	    boolean lowerCaseFlag = false;
-	    boolean numberFlag = false;
+	    boolean postojiVelikoSlovo = false;
+	    boolean postojiMaloSlovo = false;
+	    boolean postojiBroj = false;
 	    for(int i=0;i < str.length();i++) {
 	        ch = str.charAt(i);
 	        if( Character.isDigit(ch)) {
-	            numberFlag = true;
+	        	postojiBroj = true;
 	        }
 	        else if (Character.isUpperCase(ch)) {
-	            capitalFlag = true;
+	        	postojiVelikoSlovo = true;
 	        } else if (Character.isLowerCase(ch)) {
-	            lowerCaseFlag = true;
+	        	postojiMaloSlovo = true;
 	        }
-	        if(numberFlag && capitalFlag && lowerCaseFlag)
+	        if(postojiBroj && postojiVelikoSlovo && postojiMaloSlovo)
 	            return true;
 	    }
 	    return false;
