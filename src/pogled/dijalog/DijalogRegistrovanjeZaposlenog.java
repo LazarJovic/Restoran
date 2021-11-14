@@ -69,10 +69,10 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 		tfPrezime = new TekstPolje("yy", fntTekstPolje, 140, 30);
 				
 		Labela lblTelefon = new Labela("Telefon:", fntLabela, clrTercijarna);
-		tfTelefon = new TekstPolje("yy", fntTekstPolje, 140, 30);
+		tfTelefon = new TekstPolje("54353", fntTekstPolje, 140, 30);
 		
 		Labela lblEmail = new Labela("Email:", fntLabela, clrTercijarna);
-		tfEmail = new TekstPolje("yy", fntTekstPolje, 140, 30);
+		tfEmail = new TekstPolje("yy@r.co", fntTekstPolje, 140, 30);
 
 		Labela lblDatumRodjenja = new Labela("Datum rodjenja:", fntLabela, clrTercijarna);
 		tfDatumRodjenja = new TekstPolje("1998-12-12", fntTekstPolje, 140, 30);
@@ -81,7 +81,7 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 		tfKorIme = new TekstPolje("yy", fntTekstPolje, 140, 30);
 		
 		Labela lblLozinka = new Labela("Lozinka:", fntLabela, clrTercijarna);
-		tfLozinka = new LozinkaPolje("yy", 140, 30);
+		tfLozinka = new LozinkaPolje("yyAA234234", 140, 30);
 		
 		Labela lblTipZaposlenog = new Labela("Tip zaposlenog:", fntLabela, clrTercijarna);
 		PadajucaLista plTipoviZaposlenih = new PadajucaLista(PogledUtil.getTipoviZaposlenih(),

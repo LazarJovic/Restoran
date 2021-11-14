@@ -11,6 +11,7 @@ import izuzeci.ResultEmptyException;
 import izuzeci.UniqueValueException;
 import model.Korisnik;
 import repozitorijum.KorisnikRepo;
+import util.Bezbednost;
 import util.Validacija;
 
 public class KorisnikKontroler {
@@ -109,7 +110,7 @@ public class KorisnikKontroler {
 			uloga = "MENADZER";
 		}
 		
-		return korisnikRepo.dodajKorisnika(ime, prezime, telefon, email, parsiranDatumRodjenja, korIme, lozinka, uloga);
+		return korisnikRepo.dodajKorisnika(ime, prezime, telefon, email, parsiranDatumRodjenja, korIme, Bezbednost.generisiHashLozinke(lozinka), uloga);
 	}
 	
 	public void setKorisnik(Korisnik korisnik) {

@@ -5,6 +5,7 @@ import izuzeci.MissingValueException;
 import model.KorisnickiNalog;
 import model.PrijavljenKorisnik;
 import repozitorijum.KorisnickiNalogRepo;
+import util.Bezbednost;
 
 public class AuthKontroler {
 
@@ -22,8 +23,7 @@ public class AuthKontroler {
 		}
 		
 		KorisnickiNalog korisnickiNalog = korisnickiNalogRepo.dobaviNalogPoKorisnickomImenu(korisnickoIme);
-		
-		if (korisnickiNalog == null || !korisnickiNalog.getLozinka().equals(lozinka)) {
+		if (korisnickiNalog == null || !korisnickiNalog.getLozinka().equals(Bezbednost.generisiHashLozinke(lozinka))) {
 			throw new BadCredentialsException("Uneseni kredencijali nisu odgovarajući.");
 		}
 		

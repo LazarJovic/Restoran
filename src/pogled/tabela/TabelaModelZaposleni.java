@@ -31,7 +31,8 @@ public class TabelaModelZaposleni extends AbstractTableModel implements Publishe
 	
 	public void izmeniKorisnika(Korisnik izmenjenKorisnik) {
 		for (int i = 0; i < korisnici.size(); i++) {
-			if (korisnici.get(i).getEmail().equals(izmenjenKorisnik.getEmail())) {
+			if (korisnici.get(i).getKorisnickiNalog().getKorisnickoIme()
+					.equals(izmenjenKorisnik.getKorisnickiNalog().getKorisnickoIme())) {
 				korisnici.remove(i);
 				korisnici.add(i, izmenjenKorisnik);
 			}
