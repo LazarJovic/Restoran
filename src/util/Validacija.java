@@ -1,6 +1,6 @@
 package util;
 
-public class Validations {
+public class Validacija {
 	
 	public static boolean praznaIliNepostojecaVrednost(String input) {
 		return input == null || input.equals("");

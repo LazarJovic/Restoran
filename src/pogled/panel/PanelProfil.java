@@ -33,7 +33,6 @@ public class PanelProfil extends JPanel implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = -2302967480314898683L;
-	private PocetniProzor pocetniProzor;
 	private PrijavljenKorisnik prijavljenKorisnik = PrijavljenKorisnik.getInstance();
 	private Korisnik korisnik;
 	private KorisnikKontroler korisnikKontroler;
@@ -56,7 +55,6 @@ public class PanelProfil extends JPanel implements Observer {
 		
 		setBackground(clrSekundarna);
 		
-		this.pocetniProzor = pocetniProzor;
 		korisnikKontroler = new KorisnikKontroler();
 		try {
 			korisnik = korisnikKontroler.dobaviKorisnikaPoKorImenu(prijavljenKorisnik.getKorisnickoIme());	

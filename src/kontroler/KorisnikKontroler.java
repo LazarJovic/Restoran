@@ -11,7 +11,7 @@ import izuzeci.ResultEmptyException;
 import izuzeci.UniqueValueException;
 import model.Korisnik;
 import repozitorijum.KorisnikRepo;
-import util.Validations;
+import util.Validacija;
 
 public class KorisnikKontroler {
 
@@ -41,17 +41,17 @@ public class KorisnikKontroler {
 	}
 	
 	public void izmeniKorisnika(String ime, String prezime, String telefon, String email, String stariEmail) throws MissingValueException, SQLException, BadFormatException, UniqueValueException {
-		if (Validations.praznaIliNepostojecaVrednost(ime)) {
+		if (Validacija.praznaIliNepostojecaVrednost(ime)) {
 			throw new MissingValueException("Nije validno uneto ime.");
-		} else if (Validations.praznaIliNepostojecaVrednost(prezime)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(prezime)) {
 			throw new MissingValueException("Nije validno uneto prezime.");
-		} else if (Validations.praznaIliNepostojecaVrednost(telefon)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(telefon)) {
 			throw new MissingValueException("Nije validno unet telefon.");
-		} else if (!Validations.validanTelefon(telefon)) {
+		} else if (!Validacija.validanTelefon(telefon)) {
 			throw new BadFormatException("Broj telefona može da sadrži samo cifre 0-9.");
-		} else if (Validations.praznaIliNepostojecaVrednost(email)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(email)) {
 			throw new MissingValueException("Nije validno uneta email adresa.");
-		} else if (!Validations.validanEmail(email)) {
+		} else if (!Validacija.validanEmail(email)) {
 			throw new BadFormatException("Email adresa nije uneta u validnom formatu. Mora biti oblika text@text.text");
 		} else if (korisnikRepo.dobaviKorisnikaPoEmailAdresi(email) != null && !email.equals(stariEmail)) {
 			throw new UniqueValueException("Uneta email adresa je već registrovana.");
@@ -68,31 +68,31 @@ public class KorisnikKontroler {
 	
 	public Korisnik registrujKorisnika(String ime, String prezime, String telefon, String email, String datumRodjenja,
 			String korIme, String lozinka, String uloga) throws MissingValueException, BadFormatException, SQLException, UniqueValueException {
-		if (Validations.praznaIliNepostojecaVrednost(ime)) {
+		if (Validacija.praznaIliNepostojecaVrednost(ime)) {
 			throw new MissingValueException("Nije validno uneto ime.");
-		} else if (Validations.praznaIliNepostojecaVrednost(prezime)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(prezime)) {
 			throw new MissingValueException("Nije validno uneto prezime.");
-		} else if (Validations.praznaIliNepostojecaVrednost(telefon)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(telefon)) {
 			throw new MissingValueException("Nije validno unet telefon.");
-		} else if (!Validations.validanTelefon(telefon)) {
+		} else if (!Validacija.validanTelefon(telefon)) {
 			throw new BadFormatException("Broj telefona može da sadrži samo cifre 0-9.");
-		} else if (Validations.praznaIliNepostojecaVrednost(email)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(email)) {
 			throw new MissingValueException("Nije validno uneta email adresa.");
-		} else if (!Validations.validanEmail(email)) {
+		} else if (!Validacija.validanEmail(email)) {
 			throw new BadFormatException("Email adresa nije uneta u validnom formatu. Mora biti oblika text@text.text");
 		} else if (korisnikRepo.dobaviKorisnikaPoEmailAdresi(email) != null) {
 			throw new UniqueValueException("Uneta email adresa je već registrovana.");
-		} else if (Validations.praznaIliNepostojecaVrednost(datumRodjenja)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(datumRodjenja)) {
 			throw new MissingValueException("Nije unet datum rodjenja.");
-		} else if (Validations.praznaIliNepostojecaVrednost(korIme)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(korIme)) {
 			throw new MissingValueException("Nije uneto korisničko ime.");
 		} else if (korisnikRepo.dobaviKorisnikaPoKorImenu(korIme) != null) {
 			throw new UniqueValueException("Uneto korisničko ime je već registrovano.");
-		} else if (Validations.praznaIliNepostojecaVrednost(lozinka)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(lozinka)) {
 			throw new MissingValueException("Nije uneta lozinka.");
-		} else if (!Validations.validnaLozinka(lozinka)) {
+		} else if (!Validacija.validnaLozinka(lozinka)) {
 			throw new BadFormatException("Lozinka mora da sadrži bar 8 karaktera, od čega bar jedno veliko slovo, malo slovo i broj.");
-		} else if (Validations.praznaIliNepostojecaVrednost(uloga)) {
+		} else if (Validacija.praznaIliNepostojecaVrednost(uloga)) {
 			throw new MissingValueException("Nije odabrana uloga zaposlenog.");
 		}
 		
