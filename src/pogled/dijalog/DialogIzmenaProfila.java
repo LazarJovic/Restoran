@@ -13,14 +13,16 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
+import izuzeci.UniqueValueException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
-import pogled.PogledUtil;
 import pogled.TekstPolje;
+import util.PogledUtil;
 
 public class DialogIzmenaProfila extends JDialog {
 	
@@ -73,6 +75,10 @@ public class DialogIzmenaProfila extends JDialog {
 					korisnikKontroler.izmeniKorisnika(tfIme.getText(), tfPrezime.getText(), tfTelefon.getText(), tfEmail.getText(), korisnik.getEmail());
 					zatvori();
 				} catch (MissingValueException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
+				} catch (BadFormatException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
+				} catch (UniqueValueException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);

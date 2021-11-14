@@ -21,11 +21,12 @@ public class PocetniProzorMenadzer extends PocetniProzor {
 	private MeniMenadzer meni;
 	
 	public PocetniProzorMenadzer() {
+		this.setName("MenadzerPocetniProzor");
 		MeniFabrika meniFabrika = new MeniFabrika();
 		meni = (MeniMenadzer) meniFabrika.napraviMeni("MENADZER");
 		
 		paneli = new ArrayList<>(
-	            Arrays.asList(new PanelProfil(),
+	            Arrays.asList(new PanelProfil(this),
 	                          new PanelJelovnik(),
 	                          new PanelRezervacije()));
 		

@@ -88,6 +88,14 @@ public class Korisnik implements Publisher {
 	public void setKorisnickiNalog(KorisnickiNalog korisnickiNalog) {
 		this.korisnickiNalog = korisnickiNalog;
 	}
+	
+	public void azurirajKorisnika(String ime, String prezime, String telefon, String email) {
+		this.setIme(ime);
+		this.setPrezime(prezime);
+		this.setTelefon(telefon);
+		this.setEmail(email);
+		this.notifyObservers();
+	}
 
 	@Override
 	public void addObserver(Observer observer) {
@@ -105,7 +113,7 @@ public class Korisnik implements Publisher {
 
 	@Override
 	public void notifyObservers() {
-		IzmenaKorisnikaEvent izmenaKorisnikaEvent = new IzmenaKorisnikaEvent(ime, prezime, telefon, email);
+		IzmenaKorisnikaEvent izmenaKorisnikaEvent = new IzmenaKorisnikaEvent(this);
 		for (Observer observer : observers) {
 			observer.updatePerformed(izmenaKorisnikaEvent);
 		}	

@@ -22,15 +22,17 @@ public class PocetniProzorVlasnik extends PocetniProzor {
 	 */
 	private static final long serialVersionUID = 6761965705200164299L;
 	private MeniVlasnik meni;
+	private PanelZaposleni panelZaposleni;
 	
 	public PocetniProzorVlasnik() {
+		this.setName("VlasnikPocetniProzor");
 		MeniFabrika meniFabrika = new MeniFabrika();
 		meni = (MeniVlasnik) meniFabrika.napraviMeni("VLASNIK");
-		
+		panelZaposleni = new PanelZaposleni();
 		paneli = new ArrayList<>(
-	            Arrays.asList(new PanelProfil(),
+	            Arrays.asList(new PanelProfil(this),
 	                          new PanelJelovnik(),
-	                          new PanelZaposleni(),
+	                          panelZaposleni,
 	                          new PanelZahteviZaJelo(),
 	                          new PanelRezervacije(),
 	                          new PanelInfoRestorana()));
@@ -91,5 +93,9 @@ public class PocetniProzorVlasnik extends PocetniProzor {
 				osveziProzor();
 			}
 		});
+	}
+	
+	public PanelZaposleni getPanelZaposleni() {
+		return this.panelZaposleni;
 	}
 }

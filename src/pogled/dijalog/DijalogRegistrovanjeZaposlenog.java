@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
+import izuzeci.UniqueValueException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
@@ -22,9 +23,9 @@ import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.LozinkaPolje;
 import pogled.PadajucaLista;
-import pogled.PogledUtil;
 import pogled.TekstPolje;
 import pogled.tabela.TabelaModelZaposleni;
+import util.PogledUtil;
 
 public class DijalogRegistrovanjeZaposlenog extends JDialog {
 	
@@ -103,6 +104,8 @@ public class DijalogRegistrovanjeZaposlenog extends JDialog {
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
 				} catch (BadFormatException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
+				} catch (UniqueValueException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), e1.getNaslov(), JOptionPane.ERROR_MESSAGE);
 				}
 			}

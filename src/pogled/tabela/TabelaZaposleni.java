@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 
-import pogled.PogledUtil;
+import util.PogledUtil;
 
 public class TabelaZaposleni extends JTable {
 

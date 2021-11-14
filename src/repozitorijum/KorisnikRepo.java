@@ -62,6 +62,27 @@ public class KorisnikRepo {
 		return korisnik;
 	}
 	
+	public Korisnik dobaviKorisnikaPoEmailAdresi(String email) {
+		String dobaviKorisnikaPoKorImenu =
+				"SELECT * FROM Korisnik korisnik JOIN Korisnicki_Nalog nalog ON korisnik.id = nalog.id WHERE korisnik.email = ?";
+		PreparedStatement preparedStatement = null;
+		Korisnik korisnik = null;
+		try {
+			preparedStatement = BazaPodatakaKonekcija.getInstance().getKonekcija().prepareStatement(dobaviKorisnikaPoKorImenu);
+			preparedStatement.setString(1, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				korisnik = new Korisnik(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),
+						LocalDate.parse(resultSet.getString(6)), LocalDate.parse(resultSet.getString(7)),
+						new KorisnickiNalog(resultSet.getString(10), resultSet.getString(11), getUloga(resultSet.getString(12))));
+			}
+		} catch (SQLException e) {
+			return korisnik;
+		}
+		
+		return korisnik;
+	}
+	
 	public void izmeniKorisnika(String ime, String prezime, String telefon, String email, String oldEmail) throws SQLException {
 		String izmeniKorisnika =
 				"UPDATE Korisnik SET ime = ?, prezime = ?, telefon = ?, email = ? WHERE email = ?";

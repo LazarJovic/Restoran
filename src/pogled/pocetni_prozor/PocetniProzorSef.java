@@ -22,11 +22,11 @@ public class PocetniProzorSef extends PocetniProzor {
 	private MeniSefKuhinje meni;
 	
 	public PocetniProzorSef() {
+		this.setName("SefPocetniProzor");
 		MeniFabrika meniFabrika = new MeniFabrika();
 		meni = (MeniSefKuhinje) meniFabrika.napraviMeni("SEF_KUHINJE");
-		
 		paneli = new ArrayList<>(
-	            Arrays.asList(new PanelProfil(),
+	            Arrays.asList(new PanelProfil(this),
 	                          new PanelJelovnik(),
 	                          new PanelTipoviJela(),
 	                          new PanelZahteviZaJelo()));

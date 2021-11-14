@@ -19,6 +19,7 @@ import kontroler.AuthKontroler;
 import net.miginfocom.swing.MigLayout;
 import pogled.pocetni_prozor.PocetniProzor;
 import pogled.pocetni_prozor.PocetniProzorFabrika;
+import util.PogledUtil;
 
 public class PrijavaProzor extends JFrame {
 	

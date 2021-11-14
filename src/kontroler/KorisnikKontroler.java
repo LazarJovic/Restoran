@@ -8,8 +8,10 @@ import java.util.List;
 import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
 import izuzeci.ResultEmptyException;
+import izuzeci.UniqueValueException;
 import model.Korisnik;
 import repozitorijum.KorisnikRepo;
+import util.Validations;
 
 public class KorisnikKontroler {
 
@@ -38,16 +40,21 @@ public class KorisnikKontroler {
 		return korisnici;
 	}
 	
-	public void izmeniKorisnika(String ime, String prezime, String telefon, String email, String stariEmail) throws MissingValueException, SQLException {
-		//TODO: Validacija - mejl, telefon
-		if (checkIfNullOrEmpty(ime)) {
+	public void izmeniKorisnika(String ime, String prezime, String telefon, String email, String stariEmail) throws MissingValueException, SQLException, BadFormatException, UniqueValueException {
+		if (Validations.praznaIliNepostojecaVrednost(ime)) {
 			throw new MissingValueException("Nije validno uneto ime.");
-		} else if (checkIfNullOrEmpty(prezime)) {
+		} else if (Validations.praznaIliNepostojecaVrednost(prezime)) {
 			throw new MissingValueException("Nije validno uneto prezime.");
-		} else if (checkIfNullOrEmpty(telefon)) {
+		} else if (Validations.praznaIliNepostojecaVrednost(telefon)) {
 			throw new MissingValueException("Nije validno unet telefon.");
-		} else if (checkIfNullOrEmpty(email)) {
+		} else if (!Validations.validanTelefon(telefon)) {
+			throw new BadFormatException("Broj telefona može da sadrži samo cifre 0-9.");
+		} else if (Validations.praznaIliNepostojecaVrednost(email)) {
 			throw new MissingValueException("Nije validno uneta email adresa.");
+		} else if (!Validations.validanEmail(email)) {
+			throw new BadFormatException("Email adresa nije uneta u validnom formatu. Mora biti oblika text@text.text");
+		} else if (korisnikRepo.dobaviKorisnikaPoEmailAdresi(email) != null && !email.equals(stariEmail)) {
+			throw new UniqueValueException("Uneta email adresa je već registrovana.");
 		}
 		
 		try {
@@ -56,35 +63,38 @@ public class KorisnikKontroler {
 			throw new SQLException("Neuspešna izmena podataka korisnika.");
 		}
 				
-		//TODO: Ovo u jednu metodu klase Korisnik (mozda)
-		korisnik.setIme(ime);
-		korisnik.setPrezime(prezime);
-		korisnik.setTelefon(telefon);
-		korisnik.setEmail(email);
-		korisnik.notifyObservers();
+		korisnik.azurirajKorisnika(ime, prezime, telefon, email);
 	}
 	
 	public Korisnik registrujKorisnika(String ime, String prezime, String telefon, String email, String datumRodjenja,
-			String korIme, String lozinka, String uloga) throws MissingValueException, BadFormatException, SQLException {
-		if (checkIfNullOrEmpty(ime)) {
+			String korIme, String lozinka, String uloga) throws MissingValueException, BadFormatException, SQLException, UniqueValueException {
+		if (Validations.praznaIliNepostojecaVrednost(ime)) {
 			throw new MissingValueException("Nije validno uneto ime.");
-		} else if (checkIfNullOrEmpty(prezime)) {
+		} else if (Validations.praznaIliNepostojecaVrednost(prezime)) {
 			throw new MissingValueException("Nije validno uneto prezime.");
-		} else if (checkIfNullOrEmpty(telefon)) {
+		} else if (Validations.praznaIliNepostojecaVrednost(telefon)) {
 			throw new MissingValueException("Nije validno unet telefon.");
-		} else if (checkIfNullOrEmpty(email)) {
+		} else if (!Validations.validanTelefon(telefon)) {
+			throw new BadFormatException("Broj telefona može da sadrži samo cifre 0-9.");
+		} else if (Validations.praznaIliNepostojecaVrednost(email)) {
 			throw new MissingValueException("Nije validno uneta email adresa.");
-		} else if (checkIfNullOrEmpty(datumRodjenja)) {
+		} else if (!Validations.validanEmail(email)) {
+			throw new BadFormatException("Email adresa nije uneta u validnom formatu. Mora biti oblika text@text.text");
+		} else if (korisnikRepo.dobaviKorisnikaPoEmailAdresi(email) != null) {
+			throw new UniqueValueException("Uneta email adresa je već registrovana.");
+		} else if (Validations.praznaIliNepostojecaVrednost(datumRodjenja)) {
 			throw new MissingValueException("Nije unet datum rodjenja.");
-		} else if (checkIfNullOrEmpty(korIme)) {
+		} else if (Validations.praznaIliNepostojecaVrednost(korIme)) {
 			throw new MissingValueException("Nije uneto korisničko ime.");
-		} else if (checkIfNullOrEmpty(lozinka)) {
+		} else if (korisnikRepo.dobaviKorisnikaPoKorImenu(korIme) != null) {
+			throw new UniqueValueException("Uneto korisničko ime je već registrovano.");
+		} else if (Validations.praznaIliNepostojecaVrednost(lozinka)) {
 			throw new MissingValueException("Nije uneta lozinka.");
-		} else if (checkIfNullOrEmpty(uloga)) {
+		} else if (!Validations.validnaLozinka(lozinka)) {
+			throw new BadFormatException("Lozinka mora da sadrži bar 8 karaktera, od čega bar jedno veliko slovo, malo slovo i broj.");
+		} else if (Validations.praznaIliNepostojecaVrednost(uloga)) {
 			throw new MissingValueException("Nije odabrana uloga zaposlenog.");
 		}
-		
-		//TODO: Validacija - email, telefon, lozinka
 		
 		LocalDate parsiranDatumRodjenja = null;
 		try {
@@ -100,10 +110,6 @@ public class KorisnikKontroler {
 		}
 		
 		return korisnikRepo.dodajKorisnika(ime, prezime, telefon, email, parsiranDatumRodjenja, korIme, lozinka, uloga);
-	}
-	
-	private boolean checkIfNullOrEmpty(String input) {
-		return input == null || input.equals("");
 	}
 	
 	public void setKorisnik(Korisnik korisnik) {

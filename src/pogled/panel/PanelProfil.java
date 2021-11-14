@@ -22,8 +22,10 @@ import observer.IzmenaKorisnikaEvent;
 import observer.Observer;
 import pogled.FormaDugme;
 import pogled.Labela;
-import pogled.PogledUtil;
 import pogled.dijalog.DialogIzmenaProfila;
+import pogled.pocetni_prozor.PocetniProzor;
+import pogled.pocetni_prozor.PocetniProzorVlasnik;
+import util.PogledUtil;
 
 public class PanelProfil extends JPanel implements Observer {
 	
@@ -31,6 +33,7 @@ public class PanelProfil extends JPanel implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = -2302967480314898683L;
+	private PocetniProzor pocetniProzor;
 	private PrijavljenKorisnik prijavljenKorisnik = PrijavljenKorisnik.getInstance();
 	private Korisnik korisnik;
 	private KorisnikKontroler korisnikKontroler;
@@ -40,7 +43,7 @@ public class PanelProfil extends JPanel implements Observer {
 	private Labela lblTelefonVr;
 	private Labela lblEmailVr;
 	
-	public PanelProfil() {
+	public PanelProfil(PocetniProzor pocetniProzor) {
 		setName("Profil");
 		setVisible(true);
 		
@@ -53,6 +56,7 @@ public class PanelProfil extends JPanel implements Observer {
 		
 		setBackground(clrSekundarna);
 		
+		this.pocetniProzor = pocetniProzor;
 		korisnikKontroler = new KorisnikKontroler();
 		try {
 			korisnik = korisnikKontroler.dobaviKorisnikaPoKorImenu(prijavljenKorisnik.getKorisnickoIme());	
@@ -61,6 +65,9 @@ public class PanelProfil extends JPanel implements Observer {
 		}
 		korisnikKontroler.setKorisnik(korisnik);
 		korisnik.addObserver(this);
+		if (pocetniProzor.getName().equals("VlasnikPocetniProzor")) {
+			korisnik.addObserver((((PocetniProzorVlasnik)pocetniProzor).getPanelZaposleni()));
+		}
 		
 		Labela lblNaslov = new Labela("Pregled i izmena profilnih podataka", fntNaslov, clrForeground);
 		
@@ -132,11 +139,10 @@ public class PanelProfil extends JPanel implements Observer {
 	@Override
 	public void updatePerformed(EventObject e) {
 		IzmenaKorisnikaEvent izmenaKorisnikaEvent = (IzmenaKorisnikaEvent) e;
-		lblImeVr.setText(izmenaKorisnikaEvent.getIme());
-		lblPrezimeVr.setText(izmenaKorisnikaEvent.getPrezime());
-		lblTelefonVr.setText(izmenaKorisnikaEvent.getTelefon());
-		lblEmailVr.setText(izmenaKorisnikaEvent.getEmail());
+		lblImeVr.setText(izmenaKorisnikaEvent.getKorisnik().getIme());
+		lblPrezimeVr.setText(izmenaKorisnikaEvent.getKorisnik().getPrezime());
+		lblTelefonVr.setText(izmenaKorisnikaEvent.getKorisnik().getTelefon());
+		lblEmailVr.setText(izmenaKorisnikaEvent.getKorisnik().getEmail());
 		this.repaint();
 	}
-
 }

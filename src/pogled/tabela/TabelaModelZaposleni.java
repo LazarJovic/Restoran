@@ -10,7 +10,7 @@ import model.Korisnik;
 import observer.IzmenaTabeleEvent;
 import observer.Observer;
 import observer.Publisher;
-import pogled.PogledUtil;
+import util.PogledUtil;
 
 public class TabelaModelZaposleni extends AbstractTableModel implements Publisher {
 
@@ -27,6 +27,15 @@ public class TabelaModelZaposleni extends AbstractTableModel implements Publishe
 	
 	public void dodajKorisnika(Korisnik korisnik) {
 		this.korisnici.add(korisnik);
+	}
+	
+	public void izmeniKorisnika(Korisnik izmenjenKorisnik) {
+		for (int i = 0; i < korisnici.size(); i++) {
+			if (korisnici.get(i).getEmail().equals(izmenjenKorisnik.getEmail())) {
+				korisnici.remove(i);
+				korisnici.add(i, izmenjenKorisnik);
+			}
+		}
 	}
 	
 	@Override

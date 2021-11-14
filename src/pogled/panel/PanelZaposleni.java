@@ -19,14 +19,15 @@ import izuzeci.ResultEmptyException;
 import kontroler.KorisnikKontroler;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
+import observer.IzmenaKorisnikaEvent;
 import observer.Observer;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
-import pogled.PogledUtil;
 import pogled.dijalog.DijalogRegistrovanjeZaposlenog;
 import pogled.tabela.TabelaModelZaposleni;
 import pogled.tabela.TabelaZaposleni;
+import util.PogledUtil;
 
 public class PanelZaposleni extends JPanel implements Observer {
 
@@ -114,6 +115,11 @@ public class PanelZaposleni extends JPanel implements Observer {
 
 	@Override
 	public void updatePerformed(EventObject e) {
+		if (e instanceof IzmenaKorisnikaEvent) {
+			IzmenaKorisnikaEvent event = (IzmenaKorisnikaEvent) e;
+			TabelaModelZaposleni model = (TabelaModelZaposleni) tabelaZaposleni.getModel();
+			model.izmeniKorisnika(event.getKorisnik());
+		}
 		azurirajPrikaz();
 	}
 }
