@@ -4,8 +4,6 @@ public class Jelo {
 	
 	private String naziv;
 	private String opis;
-	private String dodatneInfo;
-	private float cena;
 	private String recept;
 	private boolean uklonjeno;
 	private TipJela tipJela;
@@ -13,11 +11,9 @@ public class Jelo {
 	
 	public Jelo() {}
 	
-	public Jelo(String naziv, String opis, String dodatneInfo, float cena, String recept, boolean uklonjeno, TipJela tipJela, SlikaJela slikaJela) {
+	public Jelo(String naziv, String opis, float cena, String recept, boolean uklonjeno, TipJela tipJela, SlikaJela slikaJela) {
 		this.naziv = naziv;
 		this.opis = opis;
-		this.dodatneInfo = dodatneInfo;
-		this.cena = cena;
 		this.recept = recept;
 		this.uklonjeno = uklonjeno;
 		this.tipJela = tipJela;
@@ -38,22 +34,6 @@ public class Jelo {
 
 	public void setOpis(String opis) {
 		this.opis = opis;
-	}
-
-	public String getDodatneInfo() {
-		return dodatneInfo;
-	}
-
-	public void setDodatneInfo(String dodatneInfo) {
-		this.dodatneInfo = dodatneInfo;
-	}
-
-	public float getCena() {
-		return cena;
-	}
-
-	public void setCena(float cena) {
-		this.cena = cena;
 	}
 
 	public String getRecept() {

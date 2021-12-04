@@ -25,8 +25,8 @@ import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
 import pogled.dijalog.DijalogRegistrovanjeZaposlenog;
-import pogled.tabela.TabelaModelZaposleni;
-import pogled.tabela.TabelaZaposleni;
+import pogled.tabela.zaposleni.TabelaModelZaposleni;
+import pogled.tabela.zaposleni.TabelaZaposleni;
 import util.PogledUtil;
 
 public class PanelZaposleni extends JPanel implements Observer {

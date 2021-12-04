@@ -24,7 +24,7 @@ import pogled.Labela;
 import pogled.LozinkaPolje;
 import pogled.PadajucaLista;
 import pogled.TekstPolje;
-import pogled.tabela.TabelaModelZaposleni;
+import pogled.tabela.zaposleni.TabelaModelZaposleni;
 import util.PogledUtil;
 
 public class DijalogRegistrovanjeZaposlenog extends JDialog {

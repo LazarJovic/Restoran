@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TipJela {
@@ -12,6 +13,7 @@ public class TipJela {
 	public TipJela(String naziv) {
 		super();
 		this.naziv = naziv;
+		jela = new HashSet();
 	}
 
 	public String getNaziv() {

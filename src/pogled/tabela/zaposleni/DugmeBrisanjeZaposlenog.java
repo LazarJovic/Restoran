@@ -1,4 +1,4 @@
-package pogled.tabela;
+package pogled.tabela.zaposleni;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

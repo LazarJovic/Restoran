@@ -1,4 +1,4 @@
-package pogled.tabela;
+package pogled.tabela.zaposleni;
 
 import java.util.ArrayList;
 import java.util.List;

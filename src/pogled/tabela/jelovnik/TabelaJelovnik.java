@@ -1,4 +1,4 @@
-package pogled.tabela;
+package pogled.tabela.jelovnik;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,25 +9,24 @@ import javax.swing.table.TableCellRenderer;
 
 import util.PogledUtil;
 
-public class TabelaZaposleni extends JTable {
+public class TabelaJelovnik extends JTable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1383629419392370387L;
+	private static final long serialVersionUID = -5716755961802477234L;
 
-	public TabelaZaposleni(TabelaModelZaposleni tabelaModelZaposleni) {
+	public TabelaJelovnik(TabelaModelJelovnik tabelaModelJelovnik) {
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setModel(tabelaModelZaposleni);
+		this.setModel(tabelaModelJelovnik);
 		this.getTableHeader().setBackground(PogledUtil.getPrimarnaBoja());
 		this.getTableHeader().setForeground(PogledUtil.getForegroundColor());
 		this.getTableHeader().setFont(PogledUtil.getTeksPoljeFont());
 		this.setFont(PogledUtil.getTeksPoljeFont());
-		new DugmeBrisanjeZaposlenog(this, 6);
 	}
-
+	
 	@Override
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 		Component c = super.prepareRenderer(renderer, row, column);
@@ -38,5 +37,4 @@ public class TabelaZaposleni extends JTable {
 		}
 		return c;
 	}
-	
 }
