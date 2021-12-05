@@ -1,14 +1,13 @@
 package pogled.tabela.jelovnik;
 
+import java.awt.Image;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
-import model.Jelo;
-import model.Korisnik;
-import util.PogledUtil;
+import model.JeloCena;
 
 public class TabelaModelJelovnik extends AbstractTableModel {
 
@@ -16,26 +15,24 @@ public class TabelaModelJelovnik extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2987067730871371449L;
-	private List<Jelo> jela;
+	private List<JeloCena> jelovnik;
 	
-	public TabelaModelJelovnik(List<Jelo> jela) {
-		this.jela = jela;
+	public TabelaModelJelovnik(List<JeloCena> jelovnik) {
+		this.jelovnik = jelovnik;
 	}
 	
-	public void dodajJelo(Jelo jelo) {
-		this.jela.add(jelo);
+	public void dodajJelo(JeloCena jeloCena) {
+		this.jelovnik.add(jeloCena);
 	}
 	
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
 		return 5;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return jela.size();
+		return jelovnik.size();
 	}
 	
 	@Override
@@ -50,7 +47,7 @@ public class TabelaModelJelovnik extends AbstractTableModel {
 		case 3:
 			return "Opis";
 		case 4:
-			return "Cena";
+			return "Cena (rsd)";
 		default:
 			return "";
 		}
@@ -74,7 +71,25 @@ public class TabelaModelJelovnik extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return null;
+		JeloCena jeloCena = jelovnik.get(rowIndex);
+		switch (columnIndex) {
+		case 0:
+			ImageIcon icon =  new ImageIcon(this.getClass().getResource("/jela" + jeloCena.getPutanjaSlike()));
+			Image image = icon.getImage();
+			Image resizedImg = image.getScaledInstance(80, 60,  java.awt.Image.SCALE_SMOOTH);
+			return new ImageIcon(resizedImg);
+			
+		case 1:
+			return jeloCena.getNazivTipaJela();
+		case 2:
+			return jeloCena.getNazivJela();
+		case 3:
+			return jeloCena.getOpisJela();
+		case 4:
+			return jeloCena.getCenaJela();
+		default:
+			return "";
+		}
 	}
 
 }

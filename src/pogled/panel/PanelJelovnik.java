@@ -13,15 +13,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import izuzeci.ResultEmptyException;
-import kontroler.KorisnikKontroler;
+import kontroler.JeloKontroler;
 import kontroler.TipJelaKontroler;
-import model.Korisnik;
+import model.JeloCena;
 import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
+import pogled.tabela.jelovnik.TabelaJelovnik;
+import pogled.tabela.jelovnik.TabelaModelJelovnik;
 import pogled.tabela.zaposleni.TabelaModelZaposleni;
-import pogled.tabela.zaposleni.TabelaZaposleni;
 import util.PogledUtil;
 
 public class PanelJelovnik extends JPanel {
@@ -30,11 +31,11 @@ public class PanelJelovnik extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7893396793228337113L;
-	private List<Korisnik> korisnici;
+	private List<JeloCena> jelovnik;
+	private JeloKontroler jeloKontroler;
 	private TipJelaKontroler tipJelaKontroler;
-	private KorisnikKontroler korisnikKontroler;
 	
-	private TabelaZaposleni tabelaZaposleni;
+	private TabelaJelovnik tabelaJelovnik;
 
 	public PanelJelovnik() {
 		setName("Jelovnik");
@@ -49,10 +50,10 @@ public class PanelJelovnik extends JPanel {
 		setBackground(clrSekundarna);
 		
 		//TODO: Dobavi sva jela
-		korisnikKontroler = new KorisnikKontroler();
+		jeloKontroler = new JeloKontroler();
 		tipJelaKontroler = new TipJelaKontroler();
 		try {
-			this.korisnici = korisnikKontroler.dobaviKorisnike();
+			this.jelovnik = jeloKontroler.dobaviJela();
 		} catch (ResultEmptyException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -94,9 +95,9 @@ public class PanelJelovnik extends JPanel {
 	
 	private void inicijalizujTabeluZaposlenih() {
 		
-		TabelaModelZaposleni tabelaModelZaposleni = new TabelaModelZaposleni(korisnici);
-		this.tabelaZaposleni = new TabelaZaposleni(tabelaModelZaposleni);
-		JScrollPane scrollPane = new JScrollPane(tabelaZaposleni);
+		TabelaModelJelovnik tabelaModelJelovnik = new TabelaModelJelovnik(jelovnik);
+		this.tabelaJelovnik = new TabelaJelovnik(tabelaModelJelovnik);
+		JScrollPane scrollPane = new JScrollPane(tabelaJelovnik);
 		scrollPane.setPreferredSize(new Dimension(800, 500));
 		
 		add(scrollPane, "wrap, span2, align center");
@@ -105,7 +106,7 @@ public class PanelJelovnik extends JPanel {
 	}
 	
 	private void azurirajPrikaz() {
-		TabelaModelZaposleni model = (TabelaModelZaposleni) tabelaZaposleni.getModel();
+		TabelaModelJelovnik model = (TabelaModelJelovnik) tabelaJelovnik.getModel();
 		model.fireTableDataChanged();
 		validate();
 	}
