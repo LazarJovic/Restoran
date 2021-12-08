@@ -1,9 +1,12 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Cena {
 
 	private float vrednost;
 	private float popust;
+	private LocalDate kreirana;
 	
 	public Cena() {}
 	
@@ -30,5 +33,13 @@ public class Cena {
 	
 	public float getCena() {
 		return vrednost - vrednost*(popust/100);
+	}
+	
+	public void setKreirana(LocalDate kreirana) {
+		this.kreirana = kreirana;
+	}
+	
+	public LocalDate getKreirana() {
+		return this.kreirana;
 	}
 }

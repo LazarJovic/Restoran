@@ -3,15 +3,27 @@ package repozitorijum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import baza.BazaPodatakaKonekcija;
 import model.JeloCena;
+import model.TipJela;
 
 public class JeloRepo {
 	
-	public JeloRepo() {}
+	private TipJelaRepo tipJelaRepo;
+	private SlikaJelaRepo slikaJelaRepo;
+	private CenaRepo cenaRepo;
+	private CenovnikRepo cenovnikRepo;
+	
+	public JeloRepo() {
+		this.tipJelaRepo = new TipJelaRepo();
+		this.slikaJelaRepo = new SlikaJelaRepo();
+		this.cenaRepo = new CenaRepo();
+		this.cenovnikRepo = new CenovnikRepo();
+	}
 	
 	public List<JeloCena> dobaviJelaSaCenama() {
 		String dobaviJelaSaCenama = 
@@ -38,6 +50,36 @@ public class JeloRepo {
 		}
 		
 		return jela;
+	}
+	
+	public boolean dodajJelo(String naziv, String nazivTipa, String opis, String recept, float cena, String putanjaSlike) {
+		TipJela tipJela = tipJelaRepo.dobaviTipJelaPoNazivu(nazivTipa);
+		String dodajJelo = "INSERT INTO Jelo (naziv, opis, recept, uklonjeno, tip_id) VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatement = null;
+		int jeloId = 0;
+		try {
+			preparedStatement = BazaPodatakaKonekcija.getInstance().getKonekcija().prepareStatement(dodajJelo, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1,  naziv);
+			preparedStatement.setString(2, opis);
+			preparedStatement.setString(3, recept);
+			preparedStatement.setBoolean(4, false);
+			preparedStatement.setInt(5, tipJela.getId());
+			preparedStatement.execute();
+			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+			      if (generatedKeys.next()) {
+			    	  jeloId = generatedKeys.getInt(1);
+			      }
+			}
+			
+			slikaJelaRepo.dodajSlikuJela(putanjaSlike, jeloId);
+			int cenaId = cenaRepo.dodajCenu(cena);
+			cenovnikRepo.dodajCenuJelo(jeloId, cenaId);
+		} catch (SQLException e) {
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 	
 }

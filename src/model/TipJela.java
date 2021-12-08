@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class TipJela {
 	
+	private int id;
 	private String naziv;
 	private Set<Jelo> jela;
 	
@@ -15,7 +16,21 @@ public class TipJela {
 		this.naziv = naziv;
 		jela = new HashSet();
 	}
+	
+	public TipJela(int id, String naziv) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+	}
 
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getNaziv() {
 		return naziv;
 	}

@@ -16,5 +16,4 @@ public class ResultEmptyException extends Exception {
 	public String getNaslov() {
 		return this.naslov;
 	}
-
 }

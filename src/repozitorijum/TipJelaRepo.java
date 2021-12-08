@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import baza.BazaPodatakaKonekcija;
+import model.TipJela;
 
 public class TipJelaRepo {
 
@@ -28,6 +29,25 @@ public class TipJelaRepo {
 		
 		String[] naziviTipovaJela = new String[nazivi.size()];
 		return nazivi.toArray(naziviTipovaJela);
+	}
+	
+	public TipJela dobaviTipJelaPoNazivu(String naziv) {
+		String dobaviTipJelaPoNazivu = "SELECT * FROM Tip_Jela WHERE naziv = ?";
+		PreparedStatement preparedStatement = null;
+		TipJela tipJela = null;
+		try {
+			preparedStatement = BazaPodatakaKonekcija.getInstance().getKonekcija().prepareStatement(dobaviTipJelaPoNazivu);
+			preparedStatement.setString(1, naziv);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				tipJela = new TipJela(resultSet.getInt(1), resultSet.getString(2));
+			}
+		} catch (SQLException e) {
+			return tipJela;
+		}
+		
+		return tipJela;
 	}
 	
 }

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -20,6 +22,7 @@ import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
+import pogled.dijalog.DijalogDodavanjeJela;
 import pogled.tabela.jelovnik.TabelaJelovnik;
 import pogled.tabela.jelovnik.TabelaModelJelovnik;
 import pogled.tabela.zaposleni.TabelaModelZaposleni;
@@ -34,6 +37,7 @@ public class PanelJelovnik extends JPanel {
 	private List<JeloCena> jelovnik;
 	private JeloKontroler jeloKontroler;
 	private TipJelaKontroler tipJelaKontroler;
+	private String[] naziviTipovaJela;
 	
 	private TabelaJelovnik tabelaJelovnik;
 
@@ -49,7 +53,6 @@ public class PanelJelovnik extends JPanel {
 		
 		setBackground(clrSekundarna);
 		
-		//TODO: Dobavi sva jela
 		jeloKontroler = new JeloKontroler();
 		tipJelaKontroler = new TipJelaKontroler();
 		try {
@@ -64,9 +67,9 @@ public class PanelJelovnik extends JPanel {
 		Image image = new ImageIcon(this.getClass().getResource("/menu96.png")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
 		
-		String[] naziviTipovaJela = null;
+		this.naziviTipovaJela = null;
 		try {
-			naziviTipovaJela = tipJelaKontroler.dobaviNaziveTipovaJela();
+			this.naziviTipovaJela = tipJelaKontroler.dobaviNaziveTipovaJela();
 		} catch (ResultEmptyException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), e.getNaslov(), JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -78,6 +81,14 @@ public class PanelJelovnik extends JPanel {
 		//TODO: Vidljivo samo kada je sef kuhinje ulogovan
 		//TODO: Dodaj action listener
 		FormaDugme btnDodajJelo = new FormaDugme("Dodaj jelo", clrPrimarna, clrForeground, 150, 20);
+		btnDodajJelo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DijalogDodavanjeJela dijalogDodavanjeJela = new DijalogDodavanjeJela(jeloKontroler, naziviTipovaJela);
+				dijalogDodavanjeJela.setVisible(true);
+			}
+		});
 		
 		FormaDugme btnPretrazi = new FormaDugme("Pretraži", clrPrimarna, clrForeground, 75, 20);
 		
