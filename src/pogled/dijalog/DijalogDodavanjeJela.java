@@ -3,15 +3,11 @@ package pogled.dijalog;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -26,17 +22,22 @@ import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
 import izuzeci.NotSavedException;
 import kontroler.JeloKontroler;
+import model.JeloCena;
 import net.miginfocom.swing.MigLayout;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
 import pogled.TekstPolje;
-import repozitorijum.TipJelaRepo;
+import pogled.tabela.jelovnik.TabelaModelJelovnik;
 import util.Fajlovi;
 import util.PogledUtil;
 
 public class DijalogDodavanjeJela extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1785489710996217189L;
 	private TekstPolje tfNaziv;
 	private JTextArea taOpis;
 	private JTextArea taRecept;
@@ -45,7 +46,7 @@ public class DijalogDodavanjeJela extends JDialog {
 	
 	public DijalogDodavanjeJela() {}
 	
-	public DijalogDodavanjeJela(JeloKontroler jeloKontroler, String[] naziviTipovaJela) {
+	public DijalogDodavanjeJela(JeloKontroler jeloKontroler, String[] naziviTipovaJela, TabelaModelJelovnik tabelaModelJelovnik) {
 		setSize(new Dimension(520, 750));
 		setLocationRelativeTo(null);
 		setTitle("Dodavanje jela");
@@ -117,8 +118,10 @@ public class DijalogDodavanjeJela extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					boolean sacuvano = jeloKontroler.dodajJelo(tfNaziv.getText(), (String) plTipoviJela.getSelectedItem(), taOpis.getText(), taRecept.getText(), tfCena.getText(), selektovanaSlika);
-					if (sacuvano) {
+					JeloCena dodatoJelo = jeloKontroler.dodajJelo(tfNaziv.getText(), (String) plTipoviJela.getSelectedItem(), taOpis.getText(), taRecept.getText(), tfCena.getText(), selektovanaSlika);
+					if (dodatoJelo != null) {
+						tabelaModelJelovnik.dodajJelo(dodatoJelo);
+						tabelaModelJelovnik.notifyObservers();
 						zatvori();
 					}
 				} catch (MissingValueException e1) {

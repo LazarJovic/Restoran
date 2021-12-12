@@ -1,21 +1,29 @@
 package pogled.tabela.jelovnik;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 import model.JeloCena;
+import observer.IzmenaTabeleEvent;
+import observer.Observer;
+import observer.Publisher;
 
-public class TabelaModelJelovnik extends AbstractTableModel {
+public class TabelaModelJelovnik extends AbstractTableModel implements Publisher {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2987067730871371449L;
 	private List<JeloCena> jelovnik;
+	private List<Observer> observers;
 	
 	public TabelaModelJelovnik(List<JeloCena> jelovnik) {
 		this.jelovnik = jelovnik;
@@ -74,9 +82,13 @@ public class TabelaModelJelovnik extends AbstractTableModel {
 		JeloCena jeloCena = jelovnik.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			ImageIcon icon =  new ImageIcon(this.getClass().getResource("/jela" + jeloCena.getPutanjaSlike()));
-			Image image = icon.getImage();
-			Image resizedImg = image.getScaledInstance(80, 60,  java.awt.Image.SCALE_SMOOTH);
+			Image mealImage = null;
+			try {
+				mealImage = ImageIO.read(new File("./img/jela/" + jeloCena.getPutanjaSlike()));
+			} catch (IOException e) {
+				return null;
+			}
+			Image resizedImg = mealImage.getScaledInstance(80, 60,  java.awt.Image.SCALE_SMOOTH);
 			return new ImageIcon(resizedImg);
 			
 		case 1:
@@ -89,6 +101,27 @@ public class TabelaModelJelovnik extends AbstractTableModel {
 			return jeloCena.getCenaJela();
 		default:
 			return "";
+		}
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		if (observers == null)
+			observers = new ArrayList<Observer>();
+		observers.add(observer);	
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		if (null == observers)
+			return;
+		observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer observer : observers) {
+			observer.updatePerformed(new IzmenaTabeleEvent());
 		}
 	}
 

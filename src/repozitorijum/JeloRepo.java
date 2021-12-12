@@ -52,7 +52,8 @@ public class JeloRepo {
 		return jela;
 	}
 	
-	public boolean dodajJelo(String naziv, String nazivTipa, String opis, String recept, float cena, String putanjaSlike) {
+	public JeloCena dodajJelo(String naziv, String nazivTipa, String opis, String recept, float cena, String putanjaSlike) {
+		JeloCena jeloCena = null;
 		TipJela tipJela = tipJelaRepo.dobaviTipJelaPoNazivu(nazivTipa);
 		String dodajJelo = "INSERT INTO Jelo (naziv, opis, recept, uklonjeno, tip_id) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatement = null;
@@ -75,11 +76,11 @@ public class JeloRepo {
 			int cenaId = cenaRepo.dodajCenu(cena);
 			cenovnikRepo.dodajCenuJelo(jeloId, cenaId);
 		} catch (SQLException e) {
-			return false;
+			return jeloCena;
 		} catch (Exception e) {
-			return false;
+			return jeloCena;
 		}
-		return true;
+		return new JeloCena(jeloId, naziv, opis, cena, putanjaSlike, nazivTipa);
 	}
 	
 }

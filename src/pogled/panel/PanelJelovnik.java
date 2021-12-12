@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -19,16 +20,16 @@ import kontroler.JeloKontroler;
 import kontroler.TipJelaKontroler;
 import model.JeloCena;
 import net.miginfocom.swing.MigLayout;
+import observer.Observer;
 import pogled.FormaDugme;
 import pogled.Labela;
 import pogled.PadajucaLista;
 import pogled.dijalog.DijalogDodavanjeJela;
 import pogled.tabela.jelovnik.TabelaJelovnik;
 import pogled.tabela.jelovnik.TabelaModelJelovnik;
-import pogled.tabela.zaposleni.TabelaModelZaposleni;
 import util.PogledUtil;
 
-public class PanelJelovnik extends JPanel {
+public class PanelJelovnik extends JPanel implements Observer {
 
 	/**
 	 * 
@@ -85,7 +86,7 @@ public class PanelJelovnik extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DijalogDodavanjeJela dijalogDodavanjeJela = new DijalogDodavanjeJela(jeloKontroler, naziviTipovaJela);
+				DijalogDodavanjeJela dijalogDodavanjeJela = new DijalogDodavanjeJela(jeloKontroler, naziviTipovaJela, (TabelaModelJelovnik) tabelaJelovnik.getModel());
 				dijalogDodavanjeJela.setVisible(true);
 			}
 		});
@@ -107,6 +108,7 @@ public class PanelJelovnik extends JPanel {
 	private void inicijalizujTabeluZaposlenih() {
 		
 		TabelaModelJelovnik tabelaModelJelovnik = new TabelaModelJelovnik(jelovnik);
+		tabelaModelJelovnik.addObserver(this);
 		this.tabelaJelovnik = new TabelaJelovnik(tabelaModelJelovnik);
 		JScrollPane scrollPane = new JScrollPane(tabelaJelovnik);
 		scrollPane.setPreferredSize(new Dimension(800, 500));
@@ -120,5 +122,10 @@ public class PanelJelovnik extends JPanel {
 		TabelaModelJelovnik model = (TabelaModelJelovnik) tabelaJelovnik.getModel();
 		model.fireTableDataChanged();
 		validate();
+	}
+
+	@Override
+	public void updatePerformed(EventObject e) {
+		azurirajPrikaz();
 	}
 }

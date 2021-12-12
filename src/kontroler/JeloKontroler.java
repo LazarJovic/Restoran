@@ -9,7 +9,6 @@ import izuzeci.BadFormatException;
 import izuzeci.MissingValueException;
 import izuzeci.NotSavedException;
 import izuzeci.ResultEmptyException;
-import model.Jelo;
 import model.JeloCena;
 import repozitorijum.JeloRepo;
 import util.Fajlovi;
@@ -34,7 +33,7 @@ public class JeloKontroler {
 		return jela;
 	}
 	
-	public boolean dodajJelo(String naziv, String tipJela, String opis, String recept, String cena, File selektovanaSlika) throws
+	public JeloCena dodajJelo(String naziv, String tipJela, String opis, String recept, String cena, File selektovanaSlika) throws
 	MissingValueException, BadFormatException, NotSavedException {
 		if (Validacija.praznaIliNepostojecaVrednost(naziv)) {
 			throw new MissingValueException("Nije unet naziv jela.");
@@ -61,6 +60,11 @@ public class JeloKontroler {
 			throw new NotSavedException("Slika nije uspešno sačuvana!");
 		}
 		
-		return jeloRepo.dodajJelo(naziv, tipJela, opis, recept, Float.parseFloat(cena), "/" + selektovanaSlika.getName());
+		JeloCena dodatoJelo = jeloRepo.dodajJelo(naziv, tipJela, opis, recept, Float.parseFloat(cena), "/" + selektovanaSlika.getName());
+		if (dodatoJelo == null) {
+			throw new NotSavedException("Jelo nije uspešno dodato.");
+		}
+		
+		return dodatoJelo;
 	}
 }

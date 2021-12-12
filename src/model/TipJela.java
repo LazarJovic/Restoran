@@ -14,7 +14,7 @@ public class TipJela {
 	public TipJela(String naziv) {
 		super();
 		this.naziv = naziv;
-		jela = new HashSet();
+		jela = new HashSet<Jelo>();
 	}
 	
 	public TipJela(int id, String naziv) {
