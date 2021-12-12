@@ -15,10 +15,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import enums.Uloga;
 import izuzeci.ResultEmptyException;
 import kontroler.JeloKontroler;
 import kontroler.TipJelaKontroler;
 import model.JeloCena;
+import model.PrijavljenKorisnik;
 import net.miginfocom.swing.MigLayout;
 import observer.Observer;
 import pogled.FormaDugme;
@@ -101,7 +103,10 @@ public class PanelJelovnik extends JPanel implements Observer {
 		add(plTipoviZaposlenih, "cell 0 2, align left");
 		add(btnPretrazi, "cell 0 2, gapleft 10, align left");
 		add(btnDodajJelo, "cell 1 2, wrap, align right");
-		
+		if (PrijavljenKorisnik.getInstance().getUloga() != Uloga.SEF_KUHINJE) {
+			btnDodajJelo.setVisible(false);
+
+		}
 		this.inicijalizujTabeluZaposlenih();
 	}
 	
