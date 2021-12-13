@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import model.PrijavljenKorisnik;
+import pogled.PrijavaProzor;
 import pogled.meni.MeniFabrika;
 import pogled.meni.MeniMenadzer;
 import pogled.panel.PanelJelovnik;
@@ -57,6 +59,17 @@ public class PocetniProzorMenadzer extends PocetniProzor {
 			public void actionPerformed(ActionEvent e) {
 				postaviPanel("Rezervacije");
 				osveziProzor();
+			}
+		});
+		
+		meni.getStavkaOdjava().getDugmeStavke().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PrijavljenKorisnik.setInstanceToNull();
+				zatvori();
+				PrijavaProzor prijavaProzor = new PrijavaProzor();
+				prijavaProzor.setVisible(true);
 			}
 		});
 	}

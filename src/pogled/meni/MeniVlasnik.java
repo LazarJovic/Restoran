@@ -10,6 +10,7 @@ public class MeniVlasnik extends Meni {
 	private MeniStavka stavkaZahteviZaJelo;
 	private MeniStavka stavkaRezervacije;
 	private MeniStavka stavkaInfoRestorana;
+	private MeniStavka stavkaOdjava;
 	
 	public MeniVlasnik() {
 		super();
@@ -18,11 +19,13 @@ public class MeniVlasnik extends Meni {
 		stavkaZahteviZaJelo = new MeniStavka("/meal1.png", "Zahtevi za jelo");
 		stavkaRezervacije = new MeniStavka("/reservation1.png", "Rezervacije");
 		stavkaInfoRestorana = new MeniStavka("/info1.png", "Informacije o restoranu");
+		stavkaOdjava = new MeniStavka("/logout32.png", "Odjava");
 		
 		add(stavkaZaposleni, "wrap, align center");
 		add(stavkaZahteviZaJelo, "wrap, align center");
 		add(stavkaRezervacije, "wrap, align center");
 		add(stavkaInfoRestorana, "wrap, align center");
+		add(stavkaOdjava, "wrap, align center");
 	}
 	
 	public MeniStavka getStavkaZaposleni() {
@@ -41,4 +44,7 @@ public class MeniVlasnik extends Meni {
 		return this.stavkaInfoRestorana;
 	}
 	
+	public MeniStavka getStavkaOdjava() {
+		return this.stavkaOdjava;
+	}
 }

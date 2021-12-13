@@ -39,4 +39,7 @@ public class PocetniProzor extends JFrame {
 		}
 	}
 	
+	protected void zatvori() {
+		this.dispose();
+	}
 }

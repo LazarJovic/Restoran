@@ -19,6 +19,10 @@ public class PrijavljenKorisnik {
 		return instance;
 	}
 	
+	public static void setInstanceToNull() {
+		instance = null;
+	}
+	
 	public void setKorisnickoIme(String korisnickoIme) {
 		this.korisnickoIme = korisnickoIme;
 	}
