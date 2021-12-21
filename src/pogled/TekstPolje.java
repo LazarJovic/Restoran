@@ -17,5 +17,4 @@ public class TekstPolje extends JTextField {
 		setFont(font);
 		setPreferredSize(new Dimension(width, height));
 	}
-	
 }
